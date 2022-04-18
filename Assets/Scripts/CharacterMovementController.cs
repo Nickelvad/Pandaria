@@ -44,7 +44,7 @@ public class CharacterMovementController : MonoBehaviour
         return Physics.Raycast(ray, out hit, distanceToCheck);
     }
 
-    void Update()
+    void FixedUpdate()
     {
         isGrounded = CheckIfGrounded();
 
@@ -75,13 +75,6 @@ public class CharacterMovementController : MonoBehaviour
             }
 
             rigidbody_.MovePosition(rigidbody_.position + moveDirection * speed * Time.deltaTime);
-
-            // transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * 5);
-
-            // if (isGrounded == true)
-            // {
-            //     transform.position += transform.forward * Time.deltaTime * speed;
-            // }
             
         }
     }

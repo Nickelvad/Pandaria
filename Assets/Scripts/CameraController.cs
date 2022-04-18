@@ -8,7 +8,7 @@ public class CameraController : MonoBehaviour
     public float distance = 20f;
 
 
-    void LateUpdate()
+    void FixedUpdate()
     {
         if (this.targetTransform == null)
         {
