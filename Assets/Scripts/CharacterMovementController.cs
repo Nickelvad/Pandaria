@@ -18,8 +18,6 @@ public class CharacterMovementController : MonoBehaviour
 
     public float distanceToCheck = 2f;
     public bool isGrounded = true;
-    private bool oldIsGrouned = true;
-    private bool startedToJump = false;
     private Vector3 jumpDirection;
     private RaycastHit hit;
 
@@ -62,7 +60,6 @@ public class CharacterMovementController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            startedToJump = true;
             rigidbody_.AddForce(Vector2.up * jumpSpeed, ForceMode.Impulse);
         }
 
