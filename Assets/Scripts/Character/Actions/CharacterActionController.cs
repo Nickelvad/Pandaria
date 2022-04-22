@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Pandaria.Items;
 
 namespace Pandaria.Character.Actions
 {
@@ -8,71 +9,74 @@ namespace Pandaria.Character.Actions
         public float maxRange = 5;
         private RaycastHit hit;
         public Transform slot;
-        public EventBus eventBus;
 
-        private InitialItemState initialItemState;
+        public PickedupItem pickedupItem;
 
-        private List<CharacterAction> activeActions;
-
-        void Start()
-        {
-            activeActions = new List<CharacterAction>();
-        }
+        private Item trackedPickableItem;
 
         void FixedUpdate()
         {
+            Item item = GetItem();
 
-            CharacterAction action = GetAction();
-            if (action != null)
+            if (item == trackedPickableItem)
             {
-                AddActiveAction(action);
+                return;
+            }
+
+            if (pickedupItem != null)
+            {
+                if (trackedPickableItem != null)
+                {
+                    UntrackPickableItem();
+                }
+                return;
+            }
+
+            if (item == null && trackedPickableItem != null)
+            {
+                UntrackPickableItem();
+            }
+
+            if (item != null && item.isPickable)
+            {
+                TrackPickableItem(item);
             }
 
         }
 
-        private CharacterAction GetAction()
+        private Item GetItem()
         {
             if(Physics.Raycast(transform.position, transform.forward, out hit, maxRange))
             {
-                CharacterAction action = hit.transform.GetComponent<CharacterAction>();
-                return action;
+                Item item = hit.transform.GetComponent<Item>();
+                return item;
             }
 
             return null;
         }
 
-        public void DoAction(CharacterAction action)
+        private void TrackPickableItem(Item item)
         {
-           if (action != null)
-            {
-                switch (action.actionType)
-                {
-                    case CharacterActionType.PickUp:
-                        PickUpItem(action);
-                        break;
-                    case CharacterActionType.Drop:
-                        DropItem(action);
-                        break;
-                }
-            }
+            trackedPickableItem = item;
+            EventBus.Instance.CallItemTracked(this, trackedPickableItem);
         }
 
-        private void AddActiveAction(CharacterAction action)
+        private void UntrackPickableItem()
         {
-            activeActions.Clear();
-            activeActions.Add(action);
-            eventBus.CallActionsChanged(this, activeActions);
+            EventBus.Instance.CallItemUntracked(this, trackedPickableItem);
+            trackedPickableItem = null;
+            
         }
 
-        public void PickUpItem(CharacterAction action)
+        public void PickupItem()
         {
-            if (action != null)   
+            if (trackedPickableItem != null)   
             {
                 Debug.Log(hit.transform.name.ToString());
-                Transform item = action.transform;
+                Transform item = trackedPickableItem.transform;
                 Rigidbody itemRigidbody = item.GetComponent<Rigidbody>();
 
-                initialItemState = new InitialItemState()
+                pickedupItem = new PickedupItem()
                 {
                     item = item,
                     parent = item.parent,
@@ -81,28 +85,31 @@ namespace Pandaria.Character.Actions
                     velocity = itemRigidbody.velocity,
                 };
 
-                initialItemState.item.SetParent(slot);
-                initialItemState.rigidbody.velocity = Vector3.zero;
-                initialItemState.rigidbody.isKinematic = true;
-                initialItemState.rigidbody.useGravity = false;
-                initialItemState.item.localPosition = Vector3.zero;
-                initialItemState.item.localEulerAngles = Vector3.zero;
-                initialItemState.collider.enabled = false;
+                pickedupItem.item.SetParent(slot);
+                pickedupItem.rigidbody.velocity = Vector3.zero;
+                pickedupItem.rigidbody.isKinematic = true;
+                pickedupItem.rigidbody.useGravity = false;
+                pickedupItem.item.localPosition = Vector3.zero;
+                pickedupItem.item.localEulerAngles = Vector3.zero;
+                pickedupItem.collider.enabled = false;
             }
+
+            EventBus.Instance.CallItemPickedup(this, trackedPickableItem);
         }
 
-        public void DropItem(CharacterAction action)
+        public void DropItem()
         {
             if (slot == null) { return; }
-            initialItemState.item.SetParent(initialItemState.parent);
-            initialItemState.rigidbody.velocity = initialItemState.velocity;
-            initialItemState.rigidbody.isKinematic = true;
-            initialItemState.rigidbody.useGravity = true;
-            initialItemState.collider.enabled = true;
+            pickedupItem.item.SetParent(pickedupItem.parent);
+            pickedupItem.rigidbody.velocity = pickedupItem.velocity;
+            pickedupItem.rigidbody.isKinematic = false;
+            pickedupItem.rigidbody.useGravity = true;
+            pickedupItem.collider.enabled = true;
 
-            initialItemState.rigidbody.AddForce(transform.forward * 100, ForceMode.Impulse);
-
-            initialItemState = null;
+            pickedupItem.rigidbody.AddForce(transform.forward * 100, ForceMode.Impulse);
+            Debug.Log("Calling item dropped");
+            EventBus.Instance.CallItemDropped(this, trackedPickableItem);
+            pickedupItem = null;
         }
     }
 

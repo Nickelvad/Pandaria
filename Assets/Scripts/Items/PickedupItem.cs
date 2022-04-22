@@ -1,9 +1,9 @@
 
 using UnityEngine;
 
-namespace Pandaria.Character.Actions
+namespace Pandaria.Items
 {
-    public class InitialItemState
+    public class PickedupItem
     {
         public Transform item { get; set; }
         public Transform parent { get; set; }
