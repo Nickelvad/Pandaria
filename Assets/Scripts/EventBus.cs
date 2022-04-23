@@ -7,11 +7,16 @@ namespace Pandaria
 {
     public class EventBus : Singleton<EventBus>
     {
+        public event EventHandler<GameObject> GameObjectSpotted;
         public event EventHandler<Item> ItemTracked;
         public event EventHandler<Item> ItemUntracked;
         public event EventHandler<Item> ItemPickedup;
         public event EventHandler<Item> ItemDropped;
 
+        public void CallGameObjectSpotted(object sender, GameObject gameObject)
+        {
+            GameObjectSpotted?.Invoke(sender, gameObject);
+        }
         public void CallItemTracked(object sender, Item item)
         {
             ItemTracked?.Invoke(sender, item);

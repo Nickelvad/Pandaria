@@ -2,24 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Pandaria;
 using Pandaria.Joystick;
 
 public class CharacterMovementController : MonoBehaviour
 {
-    public float inputX = 0.0f;
-    public float inputY = 0.0f;
-    private Vector3 moveDirection;
-    public float speed = 3.0f;
     public Joystick joystick;
-
+    public float speed = 3.0f;
     public float jumpSpeed = 2.0f;
-
-    private Rigidbody rigidbody_;
-
     public float distanceToCheck = 2f;
-    public bool isGrounded = true;
+    public float spottingRange = 5f;
+    private Rigidbody rigidbody_;
+    private float inputX = 0.0f;
+    private float inputY = 0.0f;
+    private Vector3 moveDirection;
+    private bool isGrounded = true;
     private Vector3 jumpDirection;
     private RaycastHit hit;
+    private GameObject spottedGameObject;
 
     void Start()
     {
@@ -40,6 +40,15 @@ public class CharacterMovementController : MonoBehaviour
     {
         Ray ray = new Ray(transform.position, Vector3.down);
         return Physics.Raycast(ray, out hit, distanceToCheck);
+    }
+
+    private GameObject CheckIfGameObjectSpotted()
+    {
+        if (Physics.Raycast(transform.position, transform.forward, out hit, spottingRange))
+        {
+            return hit.transform.gameObject;
+        }
+        return null;
     }
 
     void FixedUpdate()
@@ -74,5 +83,8 @@ public class CharacterMovementController : MonoBehaviour
             rigidbody_.MovePosition(rigidbody_.position + moveDirection * speed * Time.deltaTime);
             
         }
+
+        spottedGameObject = CheckIfGameObjectSpotted();
+        EventBus.Instance.CallGameObjectSpotted(this, spottedGameObject);
     }
 }

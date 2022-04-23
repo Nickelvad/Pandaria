@@ -7,10 +7,11 @@ using Pandaria.Character.Actions;
 
 namespace Pandaria.UI
 {
-    public class DropItemButtonController : MonoBehaviour
+    public class DropItemButtonController : MonoBehaviour, IButtonAction
     {
         private Button button;
-        public CharacterActionController characterActionController;
+        public bool isActive { get; private set; }
+        public CharacterPickupController characterPickupController;
 
         void Start()
         {
@@ -23,8 +24,7 @@ namespace Pandaria.UI
 
         private void SetButtonState(bool enabled_)
         {
-            Debug.Log(string.Format("Setting drop button {0}", enabled_.ToString()));
-            button.gameObject.SetActive(enabled_);
+            isActive = enabled_;
         }
 
         private void OnItemDropped(object sender, Item item)
@@ -38,9 +38,9 @@ namespace Pandaria.UI
             SetButtonState(true);
         }
 
-        private void OnClick()
+        public void OnClick()
         {
-            characterActionController.DropItem();
+            characterPickupController.DropItem();
         }
     }
 

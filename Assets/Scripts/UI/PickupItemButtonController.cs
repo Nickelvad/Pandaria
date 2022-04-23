@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Pandaria.Items;
@@ -7,10 +5,12 @@ using Pandaria.Character.Actions;
 
 namespace Pandaria.UI
 {
-    public class PickupItemButtonController : MonoBehaviour
+    public class PickupItemButtonController : MonoBehaviour, IButtonAction
     {
         private Button button;
-        public CharacterActionController characterActionController;
+        public CharacterPickupController characterPickupController;
+
+        public bool isActive { get; private set; }
 
         void Start()
         {
@@ -23,8 +23,7 @@ namespace Pandaria.UI
 
         private void SetButtonState(bool enabled_)
         {
-            Debug.Log(string.Format("Setting button {0}", enabled_));
-            button.gameObject.SetActive(enabled_);
+            isActive = enabled_;
         }
 
         private void OnItemUntracked(object sender, Item item)
@@ -37,9 +36,9 @@ namespace Pandaria.UI
             SetButtonState(true);
         }
 
-        private void OnClick()
+        public void OnClick()
         {
-            characterActionController.PickupItem();
+            characterPickupController.PickupItem();
         }
     }
 
