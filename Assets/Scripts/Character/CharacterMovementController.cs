@@ -9,6 +9,7 @@ namespace Pandaria.Character
 
     public class CharacterMovementController : MonoBehaviour
     {
+        public Character character;
         public float speed = 3.0f;
         public float dashBoost = 15.0f;
         public float dashDuration = 0.5f;
@@ -112,11 +113,12 @@ namespace Pandaria.Character
         void CheckDash()
         {
             bool shouldDash = Input.GetKeyDown(KeyCode.Space);
-            if (dashCooldownTimer == 0 && !isDashing && shouldDash)
+            if (dashCooldownTimer == 0 && !isDashing && shouldDash && character.canDash())
             {
                 isDashing = true;
                 dashTimer = dashDuration;
                 dashDirection = moveDirection;
+                character.ApplyDash();
             }
 
             if (isDashing && dashTimer <= 0)

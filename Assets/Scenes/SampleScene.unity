@@ -359,7 +359,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 1, g: 0, b: 0, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -373,7 +373,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 401612127}
   m_FillRect: {fileID: 401612126}
   m_HandleRect: {fileID: 0}
@@ -1590,11 +1590,11 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.7560607, g: 0.9811321, b: 0, a: 1}
+    m_NormalColor: {r: 0.7843138, g: 0.7843138, b: 0.7843138, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0, g: 0.7169812, b: 0.24180548, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -1608,15 +1608,15 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1667061263}
   m_FillRect: {fileID: 1667061262}
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 100
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4159,6 +4159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6ea12bec837acf41abf35127a174b88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  character: {fileID: 919132147957939821}
   speed: 6
   dashBoost: 20
   dashDuration: 0.3
@@ -4189,6 +4190,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2087679761}
   - component: {fileID: 2087679762}
+  - component: {fileID: 2087679763}
   m_Layer: 5
   m_Name: StatusPanel
   m_TagString: Untagged
@@ -4243,6 +4245,20 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &2087679763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2087679760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c49c6800028d842b8f83001d33ca4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hpBarSlider: {fileID: 75468821}
+  staminaBarSlider: {fileID: 438735300}
 --- !u!1 &2088069289
 GameObject:
   m_ObjectHideFlags: 0
@@ -4673,6 +4689,7 @@ GameObject:
   - component: {fileID: 1992942816}
   - component: {fileID: 919132147957939820}
   - component: {fileID: 1992942817}
+  - component: {fileID: 919132147957939821}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -4693,6 +4710,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joystick: {fileID: 1973887849}
+--- !u!114 &919132147957939821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132147957939819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f46cf48f5362354a91acb933ccbf3a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 100
+  stamina: 100
+  currentHp: 100
+  currentStamina: 100
+  hpRecoverySpeed: 0
+  staminaRecoverySpeed: 10
+  dashStaminaPrice: 30
 --- !u!33 &997476121849287583
 MeshFilter:
   m_ObjectHideFlags: 0
