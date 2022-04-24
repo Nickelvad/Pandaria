@@ -15,6 +15,7 @@ namespace Pandaria
         public event EventHandler<GatherableResource> GatherableResourceTracked;
         public event EventHandler<GatherableResource> GatherableResourceUntracked;
         public event EventHandler<int> GatherableResourceProgress;
+        public event EventHandler<Vector3> CharacterMoved;
 
 
         public void CallGameObjectSpotted(object sender, GameObject gameObject)
@@ -55,6 +56,11 @@ namespace Pandaria
         public void CallGatherableResourceProgress(object sender, int progress)
         {
             GatherableResourceProgress?.Invoke(sender, progress);
+        }
+
+        public void CallCharacterMoved(object sender, Vector3 position)
+        {
+            CharacterMoved?.Invoke(sender, position);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Pandaria.Buildings
         if (other.gameObject != null)
         {
             other.gameObject.transform.position = targetPortal.transform.position + targetPortal.transform.up * 3;
-            other.attachedRigidbody.velocity = Vector3.zero;
+            // other.attachedRigidbody.velocity = Vector3.zero;
         }
     }
 

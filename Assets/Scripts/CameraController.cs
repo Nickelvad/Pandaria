@@ -6,6 +6,7 @@ public class CameraController : MonoBehaviour
     public float verticalAngle = 60f;
     public float hortizontalAngle = 180f;
     public float distance = 20f;
+    public float slerpFactor = 0.5f;
 
 
     void FixedUpdate()
@@ -20,7 +21,7 @@ public class CameraController : MonoBehaviour
 
         var result = this.targetTransform.position + vector * distance;
 
-        this.transform.position = Vector3.Slerp(this.transform.position, result, 0.5f);
+        this.transform.position = Vector3.Slerp(this.transform.position, result, slerpFactor);
         this.transform.LookAt(this.targetTransform);
     }
 

@@ -15,6 +15,7 @@ namespace Pandaria.Character.Actions
         void Start()
         {
             EventBus.Instance.GameObjectSpotted += ProcessSpottedGameObject;
+            EventBus.Instance.CharacterMoved += ProcessCharacterMoved;
         }
 
         void ProcessSpottedGameObject(object sender, GameObject spottedGameObject)
@@ -37,6 +38,15 @@ namespace Pandaria.Character.Actions
             }
         }
 
+        void ProcessCharacterMoved(object sender, Vector3 position)
+        {
+            if (gatheringInProgress)
+            {
+                Debug.Log("Stopping");
+                StopGathering(true);
+                EventBus.Instance.CallGatherableResourceProgress(this, 0);
+            }
+        }
         public void DoAction()
         {
             gatheringInProgress = true;
@@ -49,16 +59,24 @@ namespace Pandaria.Character.Actions
                 progress += Time.deltaTime;
                 if (progress >= gatherSpeed)
                 {
-                    progress = 0;
-                    gatheringInProgress = false;
                     SpawnResource();
-                    trackedGatherableResource.gameObject.SetActive(false);
-                    trackedGatherableResource = null;
+                    StopGathering(false);
                 }
                 EventBus.Instance.CallGatherableResourceProgress(this, Mathf.RoundToInt(progress * 100 / gatherSpeed));
-                Debug.Log(progress);
             }
 
+        }
+
+        void StopGathering(bool cancelled)
+        {
+            if (!cancelled)
+            {
+                trackedGatherableResource.gameObject.SetActive(false);
+            }
+            EventBus.Instance.CallGatherableResourceUntracked(this, trackedGatherableResource);
+            trackedGatherableResource = null;
+            progress = 0;
+            gatheringInProgress = false;
         }
 
         void SpawnResource()
