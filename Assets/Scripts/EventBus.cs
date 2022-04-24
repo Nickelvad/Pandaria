@@ -12,6 +12,10 @@ namespace Pandaria
         public event EventHandler<Item> ItemUntracked;
         public event EventHandler<Item> ItemPickedup;
         public event EventHandler<Item> ItemDropped;
+        public event EventHandler<GatherableResource> GatherableResourceTracked;
+        public event EventHandler<GatherableResource> GatherableResourceUntracked;
+        public event EventHandler<int> GatherableResourceProgress;
+
 
         public void CallGameObjectSpotted(object sender, GameObject gameObject)
         {
@@ -36,6 +40,21 @@ namespace Pandaria
         {
             Debug.Log("Called event item dropped bus");
             ItemDropped?.Invoke(sender, item);
+        }
+    
+        public void CallGatherableResourceTracked(object sender, GatherableResource gatherableResource)
+        {
+            GatherableResourceTracked?.Invoke(sender, gatherableResource);
+        }
+
+        public void CallGatherableResourceUntracked(object sender, GatherableResource gatherableResource)
+        {
+            GatherableResourceUntracked?.Invoke(sender, gatherableResource);
+        }
+   
+        public void CallGatherableResourceProgress(object sender, int progress)
+        {
+            GatherableResourceProgress?.Invoke(sender, progress);
         }
     }
 }

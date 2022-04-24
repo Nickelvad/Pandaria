@@ -7,16 +7,12 @@ namespace Pandaria.UI
 {
     public class PickupItemButtonController : MonoBehaviour, IButtonAction
     {
-        private Button button;
         public CharacterPickupController characterPickupController;
 
         public bool isActive { get; private set; }
 
         void Start()
         {
-            button = GetComponentInChildren<Button>();
-            SetButtonState(false);
-            button.onClick.AddListener(OnClick);
             EventBus.Instance.ItemTracked += OnItemTracked;
             EventBus.Instance.ItemUntracked += OnItemUntracked;
         }

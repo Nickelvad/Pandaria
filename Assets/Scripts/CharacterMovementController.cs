@@ -4,6 +4,7 @@ using UnityEngine;
 
 using Pandaria;
 using Pandaria.Joystick;
+using Pandaria.Buildings;
 
 public class CharacterMovementController : MonoBehaviour
 {
@@ -12,14 +13,15 @@ public class CharacterMovementController : MonoBehaviour
     public float jumpSpeed = 2.0f;
     public float distanceToCheck = 2f;
     public float spottingRange = 5f;
+    public Portal portal;
     private Rigidbody rigidbody_;
     private float inputX = 0.0f;
     private float inputY = 0.0f;
     private Vector3 moveDirection;
     private bool isGrounded = true;
-    private Vector3 jumpDirection;
     private RaycastHit hit;
     private GameObject spottedGameObject;
+    private bool portalSpawned = false;
 
     void Start()
     {
@@ -83,8 +85,18 @@ public class CharacterMovementController : MonoBehaviour
             rigidbody_.MovePosition(rigidbody_.position + moveDirection * speed * Time.deltaTime);
             
         }
-
+        
         spottedGameObject = CheckIfGameObjectSpotted();
         EventBus.Instance.CallGameObjectSpotted(this, spottedGameObject);
+
+        if (transform.position.y < -10 && !portalSpawned)
+        {
+            Debug.Log("SPAWNING");
+            Vector3 spawnPoint = transform.position - new Vector3(0, 5, 0);
+            portal.transform.position = spawnPoint;
+            portal.gameObject.SetActive(true);
+            portalSpawned = true;
+        }
     }
+
 }

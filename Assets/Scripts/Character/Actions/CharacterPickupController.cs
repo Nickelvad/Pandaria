@@ -104,9 +104,7 @@ namespace Pandaria.Character.Actions
             pickedupItem.rigidbody.isKinematic = false;
             pickedupItem.rigidbody.useGravity = true;
             pickedupItem.collider.enabled = true;
-
             pickedupItem.rigidbody.AddForce(transform.forward * 100, ForceMode.Impulse);
-            Debug.Log("Calling item dropped");
             EventBus.Instance.CallItemDropped(this, trackedPickableItem);
             pickedupItem = null;
         }
