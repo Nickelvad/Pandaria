@@ -10,6 +10,7 @@ namespace Pandaria.Lighting
         [SerializeField] private Light directionalLight;
         [SerializeField] private LightingPreset preset;
         [SerializeField, Range(0, 24)] private float timeOfDay;
+        [SerializeField, Range(0f, 360f)] public float rotation = 100;
 
         void Update()
         {
@@ -35,7 +36,7 @@ namespace Pandaria.Lighting
             {
                 directionalLight.color = preset.DirectionalColor.Evaluate(timePercent);
                 directionalLight.transform.localRotation = Quaternion.Euler(
-                    new Vector3((timePercent * 360f) - 90f, 170, 0)
+                    new Vector3((timePercent * 360f) - 90f, rotation, 0)
                 );
             }
         }
