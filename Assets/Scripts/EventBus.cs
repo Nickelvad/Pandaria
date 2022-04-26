@@ -41,7 +41,6 @@ namespace Pandaria
 
         public void CallItemDropped(object sender, Item item)
         {
-            Debug.Log("Called event item dropped bus");
             ItemDropped?.Invoke(sender, item);
         }
     

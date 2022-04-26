@@ -29,7 +29,6 @@ namespace Pandaria.UI
 
         private void OnItemDropped(object sender, Item item)
         {
-            Debug.Log(sender.ToString());
             SetButtonState(false);
         }
 
