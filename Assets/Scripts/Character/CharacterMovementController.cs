@@ -141,7 +141,6 @@ namespace Pandaria.Characters
                     Quaternion newRotation = Quaternion.LookRotation(moveDirection);
                     rigidbody_.rotation = Quaternion.Slerp(rigidbody_.rotation, newRotation, Time.deltaTime * 5);
                 }
-
                 rigidbody_.MovePosition(rigidbody_.position + moveDirection * (speed + boost) * Time.deltaTime);
             }
         }
