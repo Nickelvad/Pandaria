@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Pandaria.Character
+namespace Pandaria.Characters
 {
     public class Character : MonoBehaviour
     {
@@ -23,10 +23,17 @@ namespace Pandaria.Character
             EventBus.Instance.CallCharacterStaminaChanged(this, (int)Mathf.Round(currentStamina));
         }
 
-        void Start()
+        public void ApplyDamage(float damage)
         {
-            
+            currentHp -= damage;
+            if (currentHp <= 0)
+            {
+                currentHp = 0;
+                Debug.Log("Death");
+            }
+            EventBus.Instance.CallCharacterHpChanged(this, (int)Mathf.Round(currentHp));
         }
+
 
         void Update()
         {

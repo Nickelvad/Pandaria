@@ -17,6 +17,7 @@ namespace Pandaria
         public event EventHandler<int> GatherableResourceProgress;
         public event EventHandler<Vector3> CharacterMoved;
         public event EventHandler<int> CharacterStaminaChanged;
+        public event EventHandler<int> CharacterHpChanged;
 
 
         public void CallGameObjectSpotted(object sender, GameObject gameObject)
@@ -67,6 +68,10 @@ namespace Pandaria
         public void CallCharacterMoved(object sender, Vector3 position)
         {
             CharacterMoved?.Invoke(sender, position);
+        }
+        public void CallCharacterHpChanged(object sender, int damage)
+        {
+            CharacterHpChanged?.Invoke(sender, damage);
         }
     }
 }

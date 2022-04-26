@@ -12,11 +12,17 @@ namespace Pandaria.UI
         void Start()
         {
             EventBus.Instance.CharacterStaminaChanged += OnStaminaChange;
+            EventBus.Instance.CharacterHpChanged += OnHpChange;
         }
 
         void OnStaminaChange(object sender, int stamina)
         {
             staminaBarSlider.value = stamina;
+        }
+
+        void OnHpChange(object sender, int hp)
+        {
+            hpBarSlider.value = hp;
         }
     }
 

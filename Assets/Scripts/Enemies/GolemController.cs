@@ -1,23 +1,25 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Pandaria.Characters;
 
 namespace Pandaria.Enemies
 {
-    public class GolemController : MonoBehaviour
+    public class GolemController : MonoBehaviour, IColliderListener
     {
         public Transform character;
         public LayerMask whatIscharacter;
         public LayerMask whatIsGround;
         private NavMeshAgent navMeshAgent;
         public Animator animator;
+        public List<ColliderBridge> extraColliders;
         public float rotationSpeed = 5f;
         public float walkPointRange = 5f;
         public float viewAngle = 45f;
         public float sightRange = 10f;
         public float timeBetweenAttacks = 3f;
         public float attackRange = 3f;
+        public float damage = 15f;
         private Vector3 walkPoint;
         private bool walkPointSet;
         private bool alreadyAttacked;
@@ -28,6 +30,10 @@ namespace Pandaria.Enemies
         void Awake()
         {
             navMeshAgent = GetComponent<NavMeshAgent>();
+            foreach (ColliderBridge colliderBridge in extraColliders)
+            {
+                colliderBridge.Initialize(this);
+            }
         }
 
         public void Update()
@@ -138,11 +144,18 @@ namespace Pandaria.Enemies
             PlayAnimation("Walk");
         }
 
-        public float AngleInRad(Vector3 vec1, Vector3 vec2) {
-            return Mathf.Atan2(vec2.y - vec1.y, vec2.x - vec1.x);
+
+        public void ExtraOnCollisionEnter(Collision collision)
+        {
+            Character character = collision.rigidbody.gameObject.GetComponent<Character>();
+            if (character != null)
+            {
+                character.ApplyDamage(damage);
+            }
         }
-        public float AngleInDeg(Vector3 vec1, Vector3 vec2) {
-            return AngleInRad(vec1, vec2) * 180 / Mathf.PI;
+        public void ExtraOnTriggerEnter(Collider other)
+        {
+
         }
 
         void OnDrawGizmosSelected()

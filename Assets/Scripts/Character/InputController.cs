@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Pandaria.Character
+namespace Pandaria.Characters
 {
 
     public class InputController : MonoBehaviour

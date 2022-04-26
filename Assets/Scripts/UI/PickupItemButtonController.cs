@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Pandaria.Items;
-using Pandaria.Character.Actions;
+using Pandaria.Characters.Actions;
 
 namespace Pandaria.UI
 {

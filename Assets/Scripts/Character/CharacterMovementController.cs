@@ -4,7 +4,7 @@ using UnityEngine;
 
 using Pandaria.Buildings;
 
-namespace Pandaria.Character
+namespace Pandaria.Characters
 {
 
     public class CharacterMovementController : MonoBehaviour

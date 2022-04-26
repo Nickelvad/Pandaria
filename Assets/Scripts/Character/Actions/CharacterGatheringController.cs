@@ -4,7 +4,7 @@ using UnityEngine;
 using Pandaria;
 using Pandaria.Items;
 
-namespace Pandaria.Character.Actions
+namespace Pandaria.Characters.Actions
 {
     public class CharacterGatheringController : MonoBehaviour
     {

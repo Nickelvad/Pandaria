@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pandaria.Items;
 
-namespace Pandaria.Character.Actions
+namespace Pandaria.Characters.Actions
 {
     public class CharacterPickupController : MonoBehaviour
     {
