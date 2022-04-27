@@ -418,6 +418,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 760eda1a35391d54682237826087032b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ab0aa4588c8a5be4db7016108b88604c, type: 2}
     - target: {fileID: 919132149155446097, guid: 760eda1a35391d54682237826087032b, type: 3}
       propertyPath: m_Name
       value: stone
@@ -2591,6 +2595,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: -9117483709511198939, guid: 8fc5f19c6f5ad234d914157ba620361f, type: 3}
+    - target: {fileID: -7511558181221131132, guid: b280d4dfb60ab6c44b24c3933bf2e41b, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: -6126091556477775235, guid: 50dc673f5df993f42908798760553554, type: 3}
     - target: {fileID: 919132149155446097, guid: b280d4dfb60ab6c44b24c3933bf2e41b, type: 3}
       propertyPath: m_Name
       value: island_main
@@ -2999,7 +3007,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5038613822463837195, guid: 6959c15ac083e1f488486251893c4c57, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.96
+      value: -14.52
       objectReference: {fileID: 0}
     - target: {fileID: 5038613822463837195, guid: 6959c15ac083e1f488486251893c4c57, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3033,6 +3041,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StoneBlock
       objectReference: {fileID: 0}
+    - target: {fileID: 6172161641674407780, guid: 6959c15ac083e1f488486251893c4c57, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ab0aa4588c8a5be4db7016108b88604c, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6959c15ac083e1f488486251893c4c57, type: 3}
 --- !u!1 &1886398772
