@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Pandaria;
-using Pandaria.Items;
-
+using Pandaria.Resources;
 namespace Pandaria.Characters.Actions
 {
     public class CharacterGatheringController : MonoBehaviour
@@ -11,7 +9,7 @@ namespace Pandaria.Characters.Actions
         private bool gatheringInProgress = false;
         private float progress = 0f;
         public float gatherSpeed = 3f;
-        private GatherableResource trackedGatherableResource;
+        private GatherableResourceManager trackedGatherableResource;
         void Start()
         {
             EventBus.Instance.GameObjectSpotted += ProcessSpottedGameObject;
@@ -30,7 +28,7 @@ namespace Pandaria.Characters.Actions
                 return;
             }
 
-            GatherableResource gatherableResource = spottedGameObject.GetComponent<GatherableResource>();
+            GatherableResourceManager gatherableResource = spottedGameObject.GetComponent<GatherableResourceManager>();
             if (gatherableResource != null)
             {
                 trackedGatherableResource = gatherableResource;
@@ -82,15 +80,11 @@ namespace Pandaria.Characters.Actions
         void SpawnResource()
         {
             Instantiate(
-                trackedGatherableResource.resource,
+                trackedGatherableResource.gatherableResourceSettings.gatherableResource.modelAfterGathering,
                 trackedGatherableResource.transform.position + Vector3.up,
                 Quaternion.identity,
                 trackedGatherableResource.transform.parent
             );
-
-
-
-
         }
     }
 

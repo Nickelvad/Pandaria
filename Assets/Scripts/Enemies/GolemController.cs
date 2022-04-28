@@ -147,7 +147,6 @@ namespace Pandaria.Enemies
 
         public void ExtraOnCollisionEnter(Collision collision)
         {
-            Debug.Log("Attack collision");
             Character character = collision.rigidbody.gameObject.GetComponent<Character>();
             if (character != null)
             {

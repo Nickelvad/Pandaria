@@ -2,6 +2,7 @@
 using System;
 using UnityEngine;
 using Pandaria.Items;
+using Pandaria.Resources;
 
 namespace Pandaria
 {
@@ -12,8 +13,8 @@ namespace Pandaria
         public event EventHandler<Item> ItemUntracked;
         public event EventHandler<Item> ItemPickedup;
         public event EventHandler<Item> ItemDropped;
-        public event EventHandler<GatherableResource> GatherableResourceTracked;
-        public event EventHandler<GatherableResource> GatherableResourceUntracked;
+        public event EventHandler<GatherableResourceManager> GatherableResourceTracked;
+        public event EventHandler<GatherableResourceManager> GatherableResourceUntracked;
         public event EventHandler<int> GatherableResourceProgress;
         public event EventHandler<Vector3> CharacterMoved;
         public event EventHandler<int> CharacterStaminaChanged;
@@ -44,14 +45,14 @@ namespace Pandaria
             ItemDropped?.Invoke(sender, item);
         }
     
-        public void CallGatherableResourceTracked(object sender, GatherableResource gatherableResource)
+        public void CallGatherableResourceTracked(object sender, GatherableResourceManager gatherableResourceManager)
         {
-            GatherableResourceTracked?.Invoke(sender, gatherableResource);
+            GatherableResourceTracked?.Invoke(sender, gatherableResourceManager);
         }
 
-        public void CallGatherableResourceUntracked(object sender, GatherableResource gatherableResource)
+        public void CallGatherableResourceUntracked(object sender, GatherableResourceManager gatherableResourceManager)
         {
-            GatherableResourceUntracked?.Invoke(sender, gatherableResource);
+            GatherableResourceUntracked?.Invoke(sender, gatherableResourceManager);
         }
    
         public void CallGatherableResourceProgress(object sender, int progress)

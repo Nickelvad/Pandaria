@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Pandaria;
-using Pandaria.Items;
 using Pandaria.Characters.Actions;
+using Pandaria.Resources;
 
 namespace Pandaria.UI
 {
@@ -24,12 +23,12 @@ namespace Pandaria.UI
             isActive = enabled_;
         }
 
-        private void OnGatherableResourceUntracked(object sender, GatherableResource gatherableResource)
+        private void OnGatherableResourceUntracked(object sender, GatherableResourceManager gatherableResourceManager)
         {
             SetButtonState(false);
         }
 
-        private void OnGatherableResourceTracked(object sender, GatherableResource gatherableResource)
+        private void OnGatherableResourceTracked(object sender, GatherableResourceManager gatherableResourceManager)
         {
             SetButtonState(true);
         }

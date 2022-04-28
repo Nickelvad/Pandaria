@@ -57,7 +57,8 @@ namespace Pandaria.Characters
         {
             if (transform.position.y < -10 && !portalSpawned)
             {
-                Vector3 spawnPoint = transform.position - new Vector3(0, 5, 0);
+                Vector3 spawnPoint = transform.position - new Vector3(0, 3, 0);
+                rigidbody_.velocity = Vector3.down * 3;
                 portal.transform.position = spawnPoint;
                 portal.gameObject.SetActive(true);
                 portalSpawned = true;

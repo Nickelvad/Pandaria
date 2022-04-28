@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 482e5d635aac45c4f9c71e797cab9714, type: 3}
+  m_Name: Crystal
+  m_EditorClassIdentifier: 
+  resourceName: Crystal
+  model: {fileID: 502614071929574120, guid: fb34cbca66a8fc44089fb43c0bc847ee, type: 3}
+  modelAfterGathering: {fileID: 5667516522913128113, guid: 6959c15ac083e1f488486251893c4c57, type: 3}
+  minPerInstance: 1
+  maxPerInstance: 5
