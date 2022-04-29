@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Pandaria.Resources;
+
 namespace Pandaria.Characters.Actions
 {
     public class CharacterGatheringController : MonoBehaviour
@@ -40,7 +39,6 @@ namespace Pandaria.Characters.Actions
         {
             if (gatheringInProgress)
             {
-                Debug.Log("Stopping");
                 StopGathering(true);
                 EventBus.Instance.CallGatherableResourceProgress(this, 0);
             }
@@ -69,9 +67,11 @@ namespace Pandaria.Characters.Actions
         {
             if (!cancelled)
             {
-                trackedGatherableResource.gameObject.SetActive(false);
+                EventBus.Instance.CallGatherableResourceCollected(this, trackedGatherableResource);
+                Destroy(trackedGatherableResource.gameObject);
             }
             EventBus.Instance.CallGatherableResourceUntracked(this, trackedGatherableResource);
+
             trackedGatherableResource = null;
             progress = 0;
             gatheringInProgress = false;
@@ -82,8 +82,7 @@ namespace Pandaria.Characters.Actions
             Instantiate(
                 trackedGatherableResource.gatherableResourceSettings.gatherableResource.modelAfterGathering,
                 trackedGatherableResource.transform.position + Vector3.up,
-                Quaternion.identity,
-                trackedGatherableResource.transform.parent
+                Quaternion.identity
             );
         }
     }

@@ -15,6 +15,7 @@ namespace Pandaria
         public event EventHandler<Item> ItemDropped;
         public event EventHandler<GatherableResourceManager> GatherableResourceTracked;
         public event EventHandler<GatherableResourceManager> GatherableResourceUntracked;
+        public event EventHandler<GatherableResourceManager> GatherableResourceCollected;
         public event EventHandler<int> GatherableResourceProgress;
         public event EventHandler<Vector3> CharacterMoved;
         public event EventHandler<int> CharacterStaminaChanged;
@@ -53,6 +54,11 @@ namespace Pandaria
         public void CallGatherableResourceUntracked(object sender, GatherableResourceManager gatherableResourceManager)
         {
             GatherableResourceUntracked?.Invoke(sender, gatherableResourceManager);
+        }
+
+        public void CallGatherableResourceCollected(object sender, GatherableResourceManager gatherableResourceManager)
+        {
+            GatherableResourceCollected?.Invoke(sender, gatherableResourceManager);
         }
    
         public void CallGatherableResourceProgress(object sender, int progress)
