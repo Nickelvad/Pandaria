@@ -101,7 +101,6 @@ namespace Pandaria.Islands
 
         public void OnGatherbaleResourceCollected(object sender, GatherableResourceManager gatherableResourceManager)
         {
-            Debug.Log(gatherableResourceManager.transform.parent);
             Transform slot = gatherableResourceManager.transform.parent;
             freeSpawnPoints.Add(slot);
             occupiedSpawnPoints.Remove(slot);
@@ -113,10 +112,8 @@ namespace Pandaria.Islands
 
         private void PeriodicResourceCheck()
         {
-            Debug.Log("Running periodic check");
             foreach (var item in islandResourceStates)
             {
-                Debug.Log(item.Value.maxCount);
                 if (item.Value.islandResources.Count < item.Value.maxCount && Time.time - item.Key.frequency > item.Value.lastSpawnTime)
                 {
                     SpawnGatherableResourcesOfType(item.Key);

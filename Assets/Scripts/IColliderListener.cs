@@ -6,8 +6,8 @@ namespace Pandaria
 {
     public interface IColliderListener
     {
-        public void ExtraOnCollisionEnter(Collision collision);
-        public void ExtraOnTriggerEnter(Collider other);
+        public void ExtraOnCollisionEnter(GameObject notifier, Collision collision);
+        public void ExtraOnTriggerEnter(GameObject notifier, Collider other);
 
     }
 }

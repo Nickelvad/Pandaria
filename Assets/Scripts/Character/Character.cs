@@ -43,6 +43,12 @@ namespace Pandaria.Characters
                 EventBus.Instance.CallCharacterStaminaChanged(this, (int)Mathf.Round(currentStamina));
             } 
         }
+
+        // void OnCollisionEnter(Collision collision)
+        // {
+        //     Debug.Log(collision.gameObject.name);
+        // }
+
     }
 
 }

@@ -7,21 +7,17 @@ namespace Pandaria.Buildings
 {
     public class Portal : MonoBehaviour
     {
-        public Portal targetPortal;
+        public Transform targetPosition;
+        public LayerMask whatIsCharacter;
 
-        void Start()
+        void OnTriggerEnter(Collider other)
         {
+
+            if (other.gameObject != null && (((1 << other.gameObject.layer) & whatIsCharacter) != 0))
+            {
+                other.gameObject.transform.position = targetPosition.position;
+            }
         }
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject != null)
-        {
-            other.gameObject.transform.position = targetPortal.transform.position + targetPortal.transform.up * 3;
-            // other.attachedRigidbody.velocity = Vector3.zero;
-        }
     }
-
-    }
-
 }

@@ -10,16 +10,19 @@ namespace Pandaria
 
         public void Initialize(IColliderListener listener)
         {
+            Debug.Log("Initialized");
             colliderListener = listener;
         }
 
         void OnCollisionEnter(Collision collision)
         {
-            colliderListener.ExtraOnCollisionEnter(collision);
+            Debug.Log(collision.gameObject.name);
+            colliderListener.ExtraOnCollisionEnter(this.gameObject, collision);
         }
         void OnTriggerEnter(Collider other)
         {
-            colliderListener.ExtraOnTriggerEnter(other);
+            Debug.Log(other.gameObject.name);
+            colliderListener.ExtraOnTriggerEnter(this.gameObject, other);
         }
     }
 }

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2ff18b2f3513b794fa931d6e31fb3db5
+guid: dc76531733995724f9285fbf8262ac64
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
@@ -7,18 +7,23 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Material.001
-    second: {fileID: -876546973899608171, guid: 19fa90b926691f542ba9c7838f6cf5b9, type: 3}
+      name: grass
+    second: {fileID: -34159566261948950, guid: e085b3d48a3875b4383d52245f5d13a0, type: 3}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Material.002
-    second: {fileID: -1114199533890271507, guid: 60861ce8878fbe140bf482b6b0bd423d, type: 3}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.003
+      name: portal
     second: {fileID: -876546973899608171, guid: 3e2048efaf2f8de44af7eebbf528ad76, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: portal_2
+    second: {fileID: -6126091556477775235, guid: 50dc673f5df993f42908798760553554, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: stone_portal
+    second: {fileID: 2100000, guid: 2fa8f7d8d7fbbad43928a64c4ea4618e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -51,12 +56,12 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 1
+    addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importVisibility: 1
     importBlendShapes: 1
-    importCameras: 0
+    importCameras: 1
     importLights: 1
     fileIdsGeneration: 2
     swapUVChannels: 0
@@ -80,7 +85,7 @@ ModelImporter:
     secondaryUVPackMargin: 4
     useFileScale: 1
   tangentSpace:
-    normalSmoothAngle: 70
+    normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4

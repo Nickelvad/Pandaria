@@ -21,11 +21,13 @@ namespace Pandaria.Enemies
         public float attackRange = 3f;
         public float damage = 15f;
         private Vector3 walkPoint;
-        private bool walkPointSet;
-        private bool alreadyAttacked;
-        private bool characterInSightRange;
-        private bool characterInAttackRange;
-        private bool characterInSightAngle;
+        public bool walkPointSet;
+        public bool alreadyAttacked;
+        public bool characterInSightRange;
+        public bool characterInAttackRange;
+        public bool characterInSightAngle;
+        public bool isAttacking = false;
+        public AnimationClip attackAnimationClip;
 
         void Awake()
         {
@@ -34,10 +36,16 @@ namespace Pandaria.Enemies
             {
                 colliderBridge.Initialize(this);
             }
+            
         }
 
         public void Update()
         {
+            if (isAttacking)
+            {
+                return;
+            }
+
             characterInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIscharacter);
             characterInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIscharacter);
             characterInSightAngle = CheckIfInSightAngle();
@@ -77,13 +85,20 @@ namespace Pandaria.Enemies
 
             walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
             
+            
             if (Physics.Raycast(walkPoint, -transform.up, 3f, whatIsGround))
             {
-                walkPointSet = true;
+                NavMeshPath path = new NavMeshPath();
+                if (navMeshAgent.CalculatePath(walkPoint, path))
+                {
+                    walkPointSet = true;
+                }
+                
             }
         }
         void Patrol()
         {
+            navMeshAgent.isStopped = false;
             if (!walkPointSet)
             {
                 SearchWalkPoint();
@@ -116,6 +131,7 @@ namespace Pandaria.Enemies
 
         void Chase()
         {
+            navMeshAgent.isStopped = false;
             navMeshAgent.SetDestination(character.position);
         }
 
@@ -128,12 +144,13 @@ namespace Pandaria.Enemies
 
         void Attack()
         {
-            navMeshAgent.SetDestination(transform.position);
-
+            navMeshAgent.isStopped = true;
             if (!alreadyAttacked)
             {
                 PlayAnimation("Attack01");
                 alreadyAttacked = true;
+                isAttacking = true;
+                Invoke(nameof(FinishAttack), attackAnimationClip.length);
                 Invoke(nameof(ResetAttack), timeBetweenAttacks);
             }
         }
@@ -144,18 +161,29 @@ namespace Pandaria.Enemies
             PlayAnimation("Walk");
         }
 
-
-        public void ExtraOnCollisionEnter(Collision collision)
+        void FinishAttack()
         {
+            isAttacking = false;
+        }
+
+
+        public void ExtraOnCollisionEnter(GameObject notifier, Collision collision)
+        {
+            Debug.Log(collision.gameObject.name);
             Character character = collision.rigidbody.gameObject.GetComponent<Character>();
             if (character != null)
             {
                 character.ApplyDamage(damage);
             }
         }
-        public void ExtraOnTriggerEnter(Collider other)
+        public void ExtraOnTriggerEnter(GameObject notifier, Collider other)
         {
-
+            Character character = other.gameObject.GetComponent<Character>();
+            if (character != null && isAttacking && notifier.name == "Index_Proximal_R")
+            {
+                Debug.Log(gameObject.name);
+                character.ApplyDamage(damage);
+            }
         }
 
         void OnDrawGizmosSelected()
