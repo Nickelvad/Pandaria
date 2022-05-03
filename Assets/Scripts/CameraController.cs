@@ -9,7 +9,7 @@ public class CameraController : MonoBehaviour
     public float slerpFactor = 0.5f;
 
 
-    void FixedUpdate()
+    void Update()
     {
         if (this.targetTransform == null)
         {

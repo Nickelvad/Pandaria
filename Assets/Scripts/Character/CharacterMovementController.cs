@@ -11,12 +11,14 @@ namespace Pandaria.Characters
     {
         public Character character;
         public float speed = 3.0f;
-        public float dashBoost = 15.0f;
-        public float dashDuration = 0.5f;
+        public float dashDistance = 8.0f;
         public float dashCooldawn = 0.5f;
-        public float distanceToCheck = 2f;
+        public float dashDuration = 0.5f;
+        public float jumpHeight = 5f;
+        public float distanceToCheck = 0.2f;
         public float spottingRange = 5f;
-        public Portal portal;
+        public Transform groundChecker;
+        public LayerMask whatIsGround;
 
         private InputController inputController;
         private Rigidbody rigidbody_;
@@ -24,11 +26,8 @@ namespace Pandaria.Characters
         private bool isGrounded = true;
         private RaycastHit hit;
         private GameObject spottedGameObject;
-        private bool portalSpawned = false;
-        private float boost = 0f;
-        private float dashCooldownTimer;
-        private float dashTimer;
         private bool isDashing = false;
+        private bool dashIsOnCooldawn = false;
         private Vector3 dashDirection;
 
         void Start()
@@ -40,11 +39,10 @@ namespace Pandaria.Characters
 
         private bool GetGrounded()
         {
-            Ray ray = new Ray(transform.position, Vector3.down);
-            return Physics.Raycast(ray, out hit, distanceToCheck);
+            return Physics.CheckSphere(groundChecker.position, distanceToCheck, whatIsGround, QueryTriggerInteraction.Ignore);
         }
 
-        private GameObject CheckIfGameObjectSpotted()
+        private GameObject GetSpottedGameObject()
         {
             if (Physics.Raycast(transform.position, transform.forward, out hit, spottingRange))
             {
@@ -53,21 +51,9 @@ namespace Pandaria.Characters
             return null;
         }
 
-        private void CheckAndSpawnPortal()
-        {
-            if (transform.position.y < -10 && !portalSpawned)
-            {
-                Vector3 spawnPoint = transform.position - new Vector3(0, 3, 0);
-                rigidbody_.velocity = Vector3.down * 3;
-                portal.transform.position = spawnPoint;
-                portal.gameObject.SetActive(true);
-                portalSpawned = true;
-            }
-        }
-
         private void CheckSpottedGameObject()
         {
-            spottedGameObject = CheckIfGameObjectSpotted();
+            spottedGameObject = GetSpottedGameObject();
             EventBus.Instance.CallGameObjectSpotted(this, spottedGameObject);
         }
 
@@ -89,50 +75,49 @@ namespace Pandaria.Characters
             return moveDirection;
         }
 
-        void TickDashTimers()
+        void Dash()
         {
-            if (dashTimer > 0f)
-            {
-                dashTimer -= Time.deltaTime;
-                if (dashTimer < 0f)
-                {
-                    dashTimer = 0f;
-                }
-            }
-
-            if (dashCooldownTimer > 0f)
-            {
-                dashCooldownTimer -= Time.deltaTime;
-                if (dashCooldownTimer < 0f)
-                {
-                    dashCooldownTimer = 0f;
-                }
-            }
-
-        }
-
-        void CheckDash()
-        {
-            bool shouldDash = Input.GetKeyDown(KeyCode.Space);
-            if (dashCooldownTimer == 0 && !isDashing && shouldDash && character.canDash())
+            bool shouldDash = Input.GetButtonDown("Dash");
+            if (!dashIsOnCooldawn && !isDashing && shouldDash && character.canDash())
             {
                 isDashing = true;
-                dashTimer = dashDuration;
+                dashIsOnCooldawn = true;
                 dashDirection = moveDirection;
-                character.ApplyDash();
-            }
 
-            if (isDashing && dashTimer <= 0)
-            {
-                isDashing = false;
-                dashCooldownTimer = dashCooldawn;
+                Vector3 dashVelocity = Vector3.Scale(
+                    transform.forward, dashDistance * new Vector3(
+                        (Mathf.Log(1f / (Time.deltaTime * 2 + 1)) / -Time.deltaTime),
+                        0,
+                        (Mathf.Log(1f / (Time.deltaTime * 2 + 1)) / -Time.deltaTime)
+                    )
+                );
+                rigidbody_.AddForce(dashVelocity, ForceMode.VelocityChange);
+                character.ApplyDash();
+                Invoke(nameof(ResetIsDashing), dashDuration);
+                Invoke(nameof(ResetDashCooldawn), dashCooldawn);
             }
+        }
+
+        void Jump()
+        {
+            if (Input.GetButtonDown("Jump") && isGrounded)
+            {
+                rigidbody_.AddForce(Vector3.up * Mathf.Sqrt(jumpHeight * -2f * Physics.gravity.y), ForceMode.VelocityChange);
+            }
+        }
+
+        void ResetDashCooldawn()
+        {
+            dashIsOnCooldawn = false;
+        }
+
+        void ResetIsDashing()
+        {
+            isDashing = false;
         }
 
         void Move()
         {
-            boost = isDashing && isGrounded ? dashBoost : 0f;
-
             if (moveDirection != Vector3.zero)
             {
                 EventBus.Instance.CallCharacterMoved(this, moveDirection);
@@ -142,24 +127,26 @@ namespace Pandaria.Characters
                     Quaternion newRotation = Quaternion.LookRotation(moveDirection);
                     rigidbody_.rotation = Quaternion.Slerp(rigidbody_.rotation, newRotation, Time.deltaTime * 5);
                 }
-                rigidbody_.MovePosition(rigidbody_.position + moveDirection * (speed + boost) * Time.deltaTime);
+                rigidbody_.MovePosition(rigidbody_.position + moveDirection * speed * Time.deltaTime);
             }
         }
 
         void Update()
         {
             moveDirection = GetMoveDirection();
-            TickDashTimers();
-            CheckDash();
+            if (moveDirection != Vector3.zero)
+            {
+                transform.forward = moveDirection;
+            }
+            Dash();
+            Jump();
         }
 
         void FixedUpdate()
         {
             Move();
             CheckSpottedGameObject();
-            CheckAndSpawnPortal();
         }
-
 
     }
 }
