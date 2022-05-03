@@ -20,7 +20,7 @@ namespace Pandaria.Characters
         private InputController inputController;
         private Rigidbody rigidbody_;
         private Vector3 moveDirection;
-        private bool isGrounded = true;
+        public bool isGrounded = true;
         private RaycastHit hit;
         private GameObject spottedGameObject;
         private bool isDashing = false;

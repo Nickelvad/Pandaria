@@ -16,6 +16,8 @@ namespace Pandaria.Buildings
             if (other.gameObject != null && (((1 << other.gameObject.layer) & whatIsCharacter) != 0))
             {
                 other.gameObject.transform.position = targetPosition.position;
+                Rigidbody rigidbody = other.gameObject.GetComponent<Rigidbody>();
+                rigidbody.velocity = Vector3.zero;
             }
         }
 
