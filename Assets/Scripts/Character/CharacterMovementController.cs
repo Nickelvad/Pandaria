@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
-using Pandaria.Buildings;
 
 namespace Pandaria.Characters
 {
@@ -12,6 +8,7 @@ namespace Pandaria.Characters
         public Character character;
         public float speed = 3.0f;
         public float dashDistance = 8.0f;
+        public float dashMultiplier = 2.0f;
         public float dashCooldawn = 0.5f;
         public float dashDuration = 0.5f;
         public float jumpHeight = 5f;
@@ -86,9 +83,9 @@ namespace Pandaria.Characters
 
                 Vector3 dashVelocity = Vector3.Scale(
                     transform.forward, dashDistance * new Vector3(
-                        (Mathf.Log(1f / (Time.deltaTime * 2 + 1)) / -Time.deltaTime),
+                        (Mathf.Log(1f / (Time.deltaTime * dashMultiplier + 1)) / -Time.deltaTime),
                         0,
-                        (Mathf.Log(1f / (Time.deltaTime * 2 + 1)) / -Time.deltaTime)
+                        (Mathf.Log(1f / (Time.deltaTime * dashMultiplier + 1)) / -Time.deltaTime)
                     )
                 );
                 rigidbody_.AddForce(dashVelocity, ForceMode.VelocityChange);
