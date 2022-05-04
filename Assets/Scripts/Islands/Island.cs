@@ -8,7 +8,7 @@ namespace Pandaria.Islands
 
     public struct IslandResource
     {
-        public GatherableResourceManager gatherableResourceManager;
+        public GatherableResourceController gatherableResourceController;
         public Transform slot;
     }
 
@@ -32,9 +32,12 @@ namespace Pandaria.Islands
         {
             freeSpawnPoints = new List<Transform>(spawnPoints);
             islandResourceStates = new Dictionary<GatherableResourceSettings, IslandResourceState>();
-            foreach (var item in gatherbaleResourceSettingsList)
+            foreach (var settings in gatherbaleResourceSettingsList)
             {
-                islandResourceStates[item] = new IslandResourceState(){maxCount = 0, islandResources = new List<IslandResource>()};
+                islandResourceStates[settings] = new IslandResourceState(){
+                    maxCount = 0,
+                    islandResources = new List<IslandResource>()
+                };
             }
             SpawnInitialResources();
             EventBus.Instance.GatherableResourceCollected += OnGatherbaleResourceCollected;
@@ -49,12 +52,12 @@ namespace Pandaria.Islands
         private void SpawnInitialResources()
         {
             
-            foreach (GatherableResourceSettings gatherableResourceSettings in gatherbaleResourceSettingsList)
+            foreach (GatherableResourceSettings settings in gatherbaleResourceSettingsList)
             {
-                int count = Random.Range(gatherableResourceSettings.min, gatherableResourceSettings.max + 1);
-                islandResourceStates[gatherableResourceSettings].maxCount = 1;
+                int count = UnityEngine.Random.Range(settings.min, settings.max + 1);
+                islandResourceStates[settings].maxCount = 1;
 
-                bool result = SpawnGatherableResourcesOfType(gatherableResourceSettings);
+                bool result = SpawnGatherableResourcesOfType(settings);
                 if (!result)
                 {
                     Debug.Log(string.Format("Not enough slots for resource spawning for island with name {0}", gameObject.name));
@@ -64,10 +67,10 @@ namespace Pandaria.Islands
             }
         }
 
-        private bool SpawnGatherableResourcesOfType(GatherableResourceSettings gatherableResourceSettings)
+        private bool SpawnGatherableResourcesOfType(GatherableResourceSettings settings)
         {
-                int count = islandResourceStates[gatherableResourceSettings].maxCount;
-                count -= islandResourceStates[gatherableResourceSettings].islandResources.Count;
+                int count = islandResourceStates[settings].maxCount;
+                count -= islandResourceStates[settings].islandResources.Count;
 
                 for (int i = 0; i <= count - 1; i++)
                 {
@@ -76,47 +79,53 @@ namespace Pandaria.Islands
                     {
                         return false;
                     }
-                    SpawnGatherableResource(freeSpawnPoints[0], gatherableResourceSettings);
-                    islandResourceStates[gatherableResourceSettings].lastSpawnTime = Time.time;
+                    SpawnGatherableResource(freeSpawnPoints[0], settings);
+                    islandResourceStates[settings].lastSpawnTime = Time.time;
                 }
                 return true;
         }
 
-        private void SpawnGatherableResource(Transform slot, GatherableResourceSettings gatherableResourceSettings)
+        private void SpawnGatherableResource(Transform slot, GatherableResourceSettings settings)
         {
             GameObject resource = Instantiate(
-                gatherableResourceSettings.gatherableResource.model,
+                settings.gatherableResource.model,
                 slot.position,
                 Quaternion.identity,
                 slot
             );
-            GatherableResourceManager gatherableResourceManager = resource.AddComponent<GatherableResourceManager>();
-            gatherableResourceManager.Initialize(gatherableResourceSettings);
-            islandResourceStates[gatherableResourceSettings].islandResources.Add(
-                new IslandResource(){slot = slot, gatherableResourceManager = gatherableResourceManager}
+            GatherableResourceController gatherableResourceController = resource.AddComponent<GatherableResourceController>();
+            gatherableResourceController.Initialize(settings);
+            islandResourceStates[settings].islandResources.Add(
+                new IslandResource(){
+                    slot = slot,
+                    gatherableResourceController = gatherableResourceController
+                }
             );
             freeSpawnPoints.Remove(slot);
             occupiedSpawnPoints.Add(slot);
         }
 
-        public void OnGatherbaleResourceCollected(object sender, GatherableResourceManager gatherableResourceManager)
+        public void OnGatherbaleResourceCollected(object sender, GatherableResourceController gatherableResourceController)
         {
-            Transform slot = gatherableResourceManager.transform.parent;
+            Transform slot = gatherableResourceController.transform.parent;
             freeSpawnPoints.Add(slot);
             occupiedSpawnPoints.Remove(slot);
-            IslandResource islandResource = islandResourceStates[gatherableResourceManager.gatherableResourceSettings].islandResources.Find(x => x.slot == slot);
-            islandResourceStates[gatherableResourceManager.gatherableResourceSettings].islandResources.Remove(islandResource);
 
-
+            var settings = gatherableResourceController.gatherableResourceSettings;
+            IslandResource islandResource = islandResourceStates[settings].islandResources.Find(x => x.slot == slot);
+            islandResourceStates[settings].islandResources.Remove(islandResource);
         }
 
         private void PeriodicResourceCheck()
         {
-            foreach (var item in islandResourceStates)
+            foreach (var entry in islandResourceStates)
             {
-                if (item.Value.islandResources.Count < item.Value.maxCount && Time.time - item.Key.frequency > item.Value.lastSpawnTime)
+                if (
+                    entry.Value.islandResources.Count < entry.Value.maxCount &&
+                    Time.time - entry.Key.frequency > entry.Value.lastSpawnTime
+                )
                 {
-                    SpawnGatherableResourcesOfType(item.Key);
+                    SpawnGatherableResourcesOfType(entry.Key);
                 }
             }
         }

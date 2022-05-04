@@ -1,5 +1,7 @@
 using UnityEngine;
+using Pandaria.Characters.Inventory;
 using Pandaria.Resources;
+using Pandaria.Items;
 
 namespace Pandaria.Characters.Actions
 {
@@ -8,7 +10,9 @@ namespace Pandaria.Characters.Actions
         private bool gatheringInProgress = false;
         private float progress = 0f;
         public float gatherSpeed = 3f;
-        private GatherableResourceManager trackedGatherableResource;
+        public CharacterInventoryController characterInventoryController;
+        private GatherableResourceController trackedGatherableResource;
+
         void Start()
         {
             EventBus.Instance.GameObjectSpotted += ProcessSpottedGameObject;
@@ -27,7 +31,7 @@ namespace Pandaria.Characters.Actions
                 return;
             }
 
-            GatherableResourceManager gatherableResource = spottedGameObject.GetComponent<GatherableResourceManager>();
+            GatherableResourceController gatherableResource = spottedGameObject.GetComponent<GatherableResourceController>();
             if (gatherableResource != null)
             {
                 trackedGatherableResource = gatherableResource;
@@ -55,7 +59,7 @@ namespace Pandaria.Characters.Actions
                 progress += Time.deltaTime;
                 if (progress >= gatherSpeed)
                 {
-                    SpawnResource();
+                    GetResource();
                     StopGathering(false);
                 }
                 EventBus.Instance.CallGatherableResourceProgress(this, Mathf.RoundToInt(progress * 100 / gatherSpeed));
@@ -77,13 +81,22 @@ namespace Pandaria.Characters.Actions
             gatheringInProgress = false;
         }
 
-        void SpawnResource()
+        void GetResource()
         {
-            Instantiate(
-                trackedGatherableResource.gatherableResourceSettings.gatherableResource.modelAfterGathering,
-                trackedGatherableResource.transform.position + Vector3.up,
-                Quaternion.identity
-            );
+            Item resultItem = trackedGatherableResource.gatherableResourceSettings.gatherableResource.resultItem;
+            if (resultItem is PickableItem pickableItem)
+            {
+                Instantiate(
+                    pickableItem.spawnPrefab,
+                    trackedGatherableResource.transform.position + Vector3.up,
+                    Quaternion.identity
+                );
+            }
+
+            if (resultItem is InventoryItem inventoryItem)
+            {
+                characterInventoryController.AddItem(inventoryItem, 1);
+            }
         }
     }
 

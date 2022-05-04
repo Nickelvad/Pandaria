@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pandaria.Items;
 
 namespace Pandaria.Resources
 {
@@ -10,7 +11,7 @@ namespace Pandaria.Resources
     {
         public string resourceName;
         public GameObject model;
-        public GameObject modelAfterGathering;
+        public Item resultItem;
         public int minPerInstance;
         public int maxPerInstance;
     }

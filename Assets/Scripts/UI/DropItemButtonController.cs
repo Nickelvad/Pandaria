@@ -18,8 +18,8 @@ namespace Pandaria.UI
             button = GetComponentInChildren<Button>();
             SetButtonState(false);
             button.onClick.AddListener(OnClick);
-            EventBus.Instance.ItemPickedup += OnItemPickedup;
-            EventBus.Instance.ItemDropped += OnItemDropped;
+            EventBus.Instance.ItemContainerPickedup += OnItemContainerPickedup;
+            EventBus.Instance.ItemContainerDropped += OnItemContainerDropped;
         }
 
         private void SetButtonState(bool enabled_)
@@ -27,19 +27,19 @@ namespace Pandaria.UI
             isActive = enabled_;
         }
 
-        private void OnItemDropped(object sender, Item item)
+        private void OnItemContainerDropped(object sender, ItemContainer itemContainer)
         {
             SetButtonState(false);
         }
 
-        private void OnItemPickedup(object sender, Item item)
+        private void OnItemContainerPickedup(object sender, ItemContainer itemContainer)
         {
             SetButtonState(true);
         }
 
         public void OnClick()
         {
-            characterPickupController.DropItem();
+            characterPickupController.DropItemContainer();
         }
     }
 

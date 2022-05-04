@@ -23,12 +23,12 @@ namespace Pandaria.UI
             isActive = enabled_;
         }
 
-        private void OnGatherableResourceUntracked(object sender, GatherableResourceManager gatherableResourceManager)
+        private void OnGatherableResourceUntracked(object sender, GatherableResourceController gatherableResourceManager)
         {
             SetButtonState(false);
         }
 
-        private void OnGatherableResourceTracked(object sender, GatherableResourceManager gatherableResourceManager)
+        private void OnGatherableResourceTracked(object sender, GatherableResourceController gatherableResourceManager)
         {
             SetButtonState(true);
         }

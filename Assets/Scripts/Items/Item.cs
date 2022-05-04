@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 namespace Pandaria.Items
 {
-    public class Item : MonoBehaviour
+    public class Item : ScriptableObject
     {
-        public bool isPickable;
-        public bool isDroppable;
+        public string itemName;
     }
 
 }

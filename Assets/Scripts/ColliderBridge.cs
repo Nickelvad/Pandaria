@@ -10,7 +10,6 @@ namespace Pandaria
 
         public void Initialize(IColliderListener listener)
         {
-            Debug.Log("Initialized");
             colliderListener = listener;
         }
 

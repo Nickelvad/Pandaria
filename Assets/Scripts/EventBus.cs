@@ -9,13 +9,13 @@ namespace Pandaria
     public class EventBus : Singleton<EventBus>
     {
         public event EventHandler<GameObject> GameObjectSpotted;
-        public event EventHandler<Item> ItemTracked;
-        public event EventHandler<Item> ItemUntracked;
-        public event EventHandler<Item> ItemPickedup;
-        public event EventHandler<Item> ItemDropped;
-        public event EventHandler<GatherableResourceManager> GatherableResourceTracked;
-        public event EventHandler<GatherableResourceManager> GatherableResourceUntracked;
-        public event EventHandler<GatherableResourceManager> GatherableResourceCollected;
+        public event EventHandler<ItemContainer> ItemContainerTracked;
+        public event EventHandler<ItemContainer> ItemContainerUntracked;
+        public event EventHandler<ItemContainer> ItemContainerPickedup;
+        public event EventHandler<ItemContainer> ItemContainerDropped;
+        public event EventHandler<GatherableResourceController> GatherableResourceTracked;
+        public event EventHandler<GatherableResourceController> GatherableResourceUntracked;
+        public event EventHandler<GatherableResourceController> GatherableResourceCollected;
         public event EventHandler<int> GatherableResourceProgress;
         public event EventHandler<Vector3> CharacterMoved;
         public event EventHandler<int> CharacterStaminaChanged;
@@ -26,39 +26,39 @@ namespace Pandaria
         {
             GameObjectSpotted?.Invoke(sender, gameObject);
         }
-        public void CallItemTracked(object sender, Item item)
+        public void CallItemContainerTracked(object sender, ItemContainer itemContainer)
         {
-            ItemTracked?.Invoke(sender, item);
+            ItemContainerTracked?.Invoke(sender, itemContainer);
         }
 
-        public void CallItemUntracked(object sender, Item item)
+        public void CallItemContainerUntracked(object sender, ItemContainer itemContainer)
         {
-            ItemUntracked?.Invoke(sender, item);
+            ItemContainerUntracked?.Invoke(sender, itemContainer);
         }
 
-        public void CallItemPickedup(object sender, Item item)
+        public void CallItemContainerPickedup(object sender, ItemContainer itemContainer)
         {
-            ItemPickedup?.Invoke(sender, item);
+            ItemContainerPickedup?.Invoke(sender, itemContainer);
         }
 
-        public void CallItemDropped(object sender, Item item)
+        public void CallItemContainerDropped(object sender, ItemContainer itemContainer)
         {
-            ItemDropped?.Invoke(sender, item);
+            ItemContainerDropped?.Invoke(sender, itemContainer);
         }
     
-        public void CallGatherableResourceTracked(object sender, GatherableResourceManager gatherableResourceManager)
+        public void CallGatherableResourceTracked(object sender, GatherableResourceController gatherableResourceController)
         {
-            GatherableResourceTracked?.Invoke(sender, gatherableResourceManager);
+            GatherableResourceTracked?.Invoke(sender, gatherableResourceController);
         }
 
-        public void CallGatherableResourceUntracked(object sender, GatherableResourceManager gatherableResourceManager)
+        public void CallGatherableResourceUntracked(object sender, GatherableResourceController gatherableResourceController)
         {
-            GatherableResourceUntracked?.Invoke(sender, gatherableResourceManager);
+            GatherableResourceUntracked?.Invoke(sender, gatherableResourceController);
         }
 
-        public void CallGatherableResourceCollected(object sender, GatherableResourceManager gatherableResourceManager)
+        public void CallGatherableResourceCollected(object sender, GatherableResourceController gatherableResourceController)
         {
-            GatherableResourceCollected?.Invoke(sender, gatherableResourceManager);
+            GatherableResourceCollected?.Invoke(sender, gatherableResourceController);
         }
    
         public void CallGatherableResourceProgress(object sender, int progress)

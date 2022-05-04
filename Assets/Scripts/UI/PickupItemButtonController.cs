@@ -13,8 +13,8 @@ namespace Pandaria.UI
 
         void Start()
         {
-            EventBus.Instance.ItemTracked += OnItemTracked;
-            EventBus.Instance.ItemUntracked += OnItemUntracked;
+            EventBus.Instance.ItemContainerTracked += OnItemContainerTracked;
+            EventBus.Instance.ItemContainerUntracked += OnItemContainerUntracked;
         }
 
         private void SetButtonState(bool enabled_)
@@ -22,12 +22,12 @@ namespace Pandaria.UI
             isActive = enabled_;
         }
 
-        private void OnItemUntracked(object sender, Item item)
+        private void OnItemContainerUntracked(object sender, ItemContainer itemContainer)
         {
             SetButtonState(false);
         }
 
-        private void OnItemTracked(object sender, Item item)
+        private void OnItemContainerTracked(object sender, ItemContainer itemContainer)
         {
             SetButtonState(true);
         }

@@ -8,8 +8,8 @@ namespace Pandaria.Characters.Actions
     {
         private RaycastHit hit;
         public Transform slot;
-        public PickedupItem pickedupItem;
-        private Item trackedPickableItem;
+        public PickedupItemContainer pickedupItemContainer;
+        private ItemContainer trackedPickableItemContainer;
 
         void Start()
         {
@@ -18,95 +18,95 @@ namespace Pandaria.Characters.Actions
 
         void ProcessSpottedGameObject(object sender, GameObject spottedGameObject)
         {
-            Item item = GetItem(spottedGameObject);
+            ItemContainer itemContainer = GetItem(spottedGameObject);
 
-            if (item == trackedPickableItem)
+            if (itemContainer == trackedPickableItemContainer)
             {
                 return;
             }
 
-            if (pickedupItem != null)
+            if (pickedupItemContainer != null)
             {
-                if (trackedPickableItem != null)
+                if (trackedPickableItemContainer != null)
                 {
-                    UntrackPickableItem();
+                    UntrackPickableItemContainer();
                 }
                 return;
             }
 
-            if (item == null && trackedPickableItem != null)
+            if (itemContainer == null && trackedPickableItemContainer != null)
             {
-                UntrackPickableItem();
+                UntrackPickableItemContainer();
             }
 
-            if (item != null && item.isPickable)
+            if (itemContainer != null && itemContainer.isPickable)
             {
-                TrackPickableItem(item);
+                TrackPickableItemContainer(itemContainer);
             }
 
         }
 
-        private Item GetItem(GameObject spottedGameObject)
+        private ItemContainer GetItem(GameObject spottedGameObject)
         {   if (spottedGameObject == null)
             {
                 return null;
             }
-            Item item = spottedGameObject.transform.GetComponent<Item>();
-            return item;
+            ItemContainer itemContainer = spottedGameObject.transform.GetComponent<ItemContainer>();
+            return itemContainer;
         }
 
-        private void TrackPickableItem(Item item)
+        private void TrackPickableItemContainer(ItemContainer itemContainer)
         {
-            trackedPickableItem = item;
-            EventBus.Instance.CallItemTracked(this, trackedPickableItem);
+            trackedPickableItemContainer = itemContainer;
+            EventBus.Instance.CallItemContainerTracked(this, trackedPickableItemContainer);
         }
 
-        private void UntrackPickableItem()
+        private void UntrackPickableItemContainer()
         {
-            EventBus.Instance.CallItemUntracked(this, trackedPickableItem);
-            trackedPickableItem = null;
+            EventBus.Instance.CallItemContainerUntracked(this, trackedPickableItemContainer);
+            trackedPickableItemContainer = null;
             
         }
 
         public void PickupItem()
         {
-            if (trackedPickableItem != null)   
+            if (trackedPickableItemContainer != null)   
             {
-                Transform item = trackedPickableItem.transform;
-                Rigidbody itemRigidbody = item.GetComponent<Rigidbody>();
+                Transform itemContainer = trackedPickableItemContainer.transform;
+                Rigidbody itemRigidbody = itemContainer.GetComponent<Rigidbody>();
 
-                pickedupItem = new PickedupItem()
+                pickedupItemContainer = new PickedupItemContainer()
                 {
-                    item = item,
-                    parent = item.parent,
+                    itemContainer = itemContainer,
+                    parent = itemContainer.parent,
                     rigidbody = itemRigidbody,
-                    collider = item.GetComponent<Collider>(),
+                    collider = itemContainer.GetComponent<Collider>(),
                     velocity = itemRigidbody.velocity,
                 };
 
-                pickedupItem.item.SetParent(slot);
-                pickedupItem.rigidbody.velocity = Vector3.zero;
-                pickedupItem.rigidbody.isKinematic = true;
-                pickedupItem.rigidbody.useGravity = false;
-                pickedupItem.item.localPosition = Vector3.zero;
-                pickedupItem.item.localEulerAngles = Vector3.zero;
-                pickedupItem.collider.enabled = false;
+                pickedupItemContainer.itemContainer.SetParent(slot);
+                pickedupItemContainer.rigidbody.velocity = Vector3.zero;
+                pickedupItemContainer.rigidbody.isKinematic = true;
+                pickedupItemContainer.rigidbody.useGravity = false;
+                pickedupItemContainer.itemContainer.localPosition = Vector3.zero;
+                pickedupItemContainer.itemContainer.localEulerAngles = Vector3.zero;
+                pickedupItemContainer.collider.enabled = false;
             }
 
-            EventBus.Instance.CallItemPickedup(this, trackedPickableItem);
+            EventBus.Instance.CallItemContainerPickedup(this, trackedPickableItemContainer);
         }
 
-        public void DropItem()
+        public void DropItemContainer()
         {
             if (slot == null) { return; }
-            pickedupItem.item.SetParent(pickedupItem.parent);
-            pickedupItem.rigidbody.velocity = pickedupItem.velocity;
-            pickedupItem.rigidbody.isKinematic = false;
-            pickedupItem.rigidbody.useGravity = true;
-            pickedupItem.collider.enabled = true;
-            pickedupItem.rigidbody.AddForce(transform.forward * 100, ForceMode.Impulse);
-            EventBus.Instance.CallItemDropped(this, trackedPickableItem);
-            pickedupItem = null;
+            pickedupItemContainer.itemContainer.SetParent(pickedupItemContainer.parent);
+            pickedupItemContainer.rigidbody.velocity = pickedupItemContainer.velocity;
+            pickedupItemContainer.rigidbody.isKinematic = false;
+            pickedupItemContainer.rigidbody.useGravity = true;
+            pickedupItemContainer.collider.enabled = true;
+            pickedupItemContainer.rigidbody.AddForce(transform.forward * 100, ForceMode.Impulse);
+            EventBus.Instance.CallItemContainerDropped(this, trackedPickableItemContainer);
+            pickedupItemContainer = null;
         }
     }
 
