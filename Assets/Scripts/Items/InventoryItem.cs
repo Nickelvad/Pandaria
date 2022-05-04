@@ -8,7 +8,7 @@ namespace Pandaria.Items
     [CreateAssetMenu(fileName = "InventoryItem", menuName = "Scriptables/Items/Inventory Item", order=1)]
     public class InventoryItem : Item
     {
-        public Texture2D inventoryImage;
+        public Sprite inventoryImage;
         
     }
 

@@ -107,6 +107,12 @@ namespace Pandaria.Islands
 
         public void OnGatherbaleResourceCollected(object sender, GatherableResourceController gatherableResourceController)
         {
+            // For resources that where manually placed in editor
+            if (!islandResourceStates.ContainsKey(gatherableResourceController.gatherableResourceSettings))
+            {
+                return;
+            }
+
             Transform slot = gatherableResourceController.transform.parent;
             freeSpawnPoints.Add(slot);
             occupiedSpawnPoints.Remove(slot);

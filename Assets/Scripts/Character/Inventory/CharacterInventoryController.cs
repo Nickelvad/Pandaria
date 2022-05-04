@@ -10,8 +10,8 @@ namespace Pandaria.Characters.Inventory
     {
         public int backpackSlotsCount = 21;
         public int quickSlotsCount = 4;
-        private List<InventorySlot> backpackSlots;
-        private List<InventorySlot> quickSlots;
+        [SerializeField] public List<InventorySlot> backpackSlots {get; private set;}
+        [SerializeField] public List<InventorySlot> quickSlots {get; private set;}
 
         void Awake()
         {
