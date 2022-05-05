@@ -5,7 +5,7 @@ namespace Pandaria.Characters
 
     public class CharacterMovementController : MonoBehaviour
     {
-        public CharacterController character;
+        public CharacterStatusController character;
         public float speed = 3.0f;
         public float dashDistance = 8.0f;
         public float dashMultiplier = 2.0f;

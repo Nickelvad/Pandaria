@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Pandaria.Characters
 {
-    public class CharacterController : MonoBehaviour
+    public class CharacterStatusController : MonoBehaviour
     {
         public int hp = 100;
         public int stamina = 100;

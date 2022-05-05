@@ -6,7 +6,7 @@ namespace Pandaria.UI.Character
     public class CharacterWindowController : MonoBehaviour
     {
         public Button closeButton;
-        public Pandaria.Characters.CharacterController characterController;
+        public CharacterStatusController characterStatusController;
 
         void Awake()
         {
