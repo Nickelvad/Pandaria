@@ -170,7 +170,7 @@ namespace Pandaria.Enemies
         public void ExtraOnCollisionEnter(GameObject notifier, Collision collision)
         {
             Debug.Log(collision.gameObject.name);
-            Character character = collision.rigidbody.gameObject.GetComponent<Character>();
+            Characters.CharacterController character = collision.rigidbody.gameObject.GetComponent<Characters.CharacterController>();
             if (character != null)
             {
                 character.ApplyDamage(damage);
@@ -178,7 +178,7 @@ namespace Pandaria.Enemies
         }
         public void ExtraOnTriggerEnter(GameObject notifier, Collider other)
         {
-            Character character = other.gameObject.GetComponent<Character>();
+            Characters.CharacterController character = other.gameObject.GetComponent<Characters.CharacterController>();
             if (character != null && isAttacking && notifier.name == "Index_Proximal_R")
             {
                 Debug.Log(gameObject.name);
