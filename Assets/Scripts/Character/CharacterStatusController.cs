@@ -4,8 +4,15 @@ namespace Pandaria.Characters
 {
     public class CharacterStatusController : MonoBehaviour
     {
-        public int hp = 100;
-        public int stamina = 100;
+        public float hp = 100f;
+        public float stamina = 100f;
+        public float mana = 0f;
+        [ReadOnly] public float defence = 0f;
+        [ReadOnly] public float critDefenceRating = 5.0f;
+        [ReadOnly] public float attackMin = 0f;
+        [ReadOnly] public float attackMax = 0f;
+        [ReadOnly] public float attackSpeed = 5.0f;
+        [ReadOnly] public float critRating = 5.0f;
         public float currentHp = 100f;
         public float currentStamina = 100f;
         public float hpRecoverySpeed = 0f;

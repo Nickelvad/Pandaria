@@ -12,7 +12,10 @@ namespace Pandaria.UI.Character
         public TextMeshProUGUI staminaValueText;
         public TextMeshProUGUI manaValueText;
         public TextMeshProUGUI defenceValueText;
-
+        public TextMeshProUGUI critDefenceRatingValueText;
+        public TextMeshProUGUI attackValueText;
+        public TextMeshProUGUI attackSpeedValueText;    
+        public TextMeshProUGUI critRatingValueText;
 
         void Awake()
         {
@@ -23,8 +26,12 @@ namespace Pandaria.UI.Character
         {
             healthValueText.text = characterStatusController.hp.ToString();
             staminaValueText.text = characterStatusController.stamina.ToString();
-            manaValueText.text = "0";
-            defenceValueText.text = "0";
+            manaValueText.text = characterStatusController.mana.ToString();
+            defenceValueText.text = characterStatusController.defence.ToString();
+            critDefenceRatingValueText.text = characterStatusController.critDefenceRating.ToString();
+            attackValueText.text = string.Format(
+                "{0} - {1}", characterStatusController.attackMin.ToString(), characterStatusController.attackMax.ToString()
+            );
         }
 
         void OnEnable()
