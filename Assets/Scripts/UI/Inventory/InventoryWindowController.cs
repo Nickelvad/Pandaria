@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Pandaria.Items;
 using Pandaria.Characters.Inventory;
 
 namespace Pandaria.UI.Inventory
@@ -13,16 +14,20 @@ namespace Pandaria.UI.Inventory
         public GameObject quickSlotPrefab;
         public GameObject backpackSlotsContainer;
         public GameObject quickSlotsContainer;
+        public Button equipButton;
+        private InventorySlotController selectedInventorySlotController;
 
         void Awake()
         {
-            closeButton.onClick.AddListener(closeDialog);
+            closeButton.onClick.AddListener(OnCloseClick);
+            equipButton.onClick.AddListener(OnEquipClick);
         }
 
         void OnDisable()
         {
             CleanSlots(backpackSlotsContainer);
             CleanSlots(quickSlotsContainer);
+            equipButton.gameObject.SetActive(false);
         }
 
         void OnEnable()
@@ -31,7 +36,7 @@ namespace Pandaria.UI.Inventory
             FillSlots(characterInventoryController.quickSlots, quickSlotPrefab, quickSlotsContainer);
         }
 
-        void closeDialog()
+        void OnCloseClick()
         {
             gameObject.SetActive(false);
         }
@@ -42,6 +47,15 @@ namespace Pandaria.UI.Inventory
             {
                 DestroyImmediate(gameObjectForCleanup.transform.GetChild(0).gameObject);
             }
+        }
+
+        private void Refresh()
+        {
+            CleanSlots(backpackSlotsContainer);
+            CleanSlots(quickSlotsContainer);
+            FillSlots(characterInventoryController.backpackSlots, backpackSlotPrefab, backpackSlotsContainer);
+            FillSlots(characterInventoryController.quickSlots, quickSlotPrefab, quickSlotsContainer);
+            selectedInventorySlotController = null;
         }
 
         private void FillSlots(List<InventorySlot> slots, GameObject slotPrefab, GameObject slotsContainer)
@@ -57,8 +71,35 @@ namespace Pandaria.UI.Inventory
                 
                 InventorySlotController inventorySlotController = slotItem.GetComponent<InventorySlotController>();
                 inventorySlotController.Initialize(inventorySlot);
-
+                inventorySlotController.selectButton.onClick.AddListener(() => OnSelectClick(inventorySlotController));
             }
+        }
+
+        public void OnSelectClick(InventorySlotController inventorySlotController)
+        {
+            if (selectedInventorySlotController != null)
+            {
+                selectedInventorySlotController.SetSelected(false);
+            }
+            
+
+            selectedInventorySlotController = inventorySlotController;
+            selectedInventorySlotController.SetSelected(true);
+
+            if (selectedInventorySlotController.inventorySlot.inventoryItem is EquipableItem equipableItem)
+            {
+                equipButton.gameObject.SetActive(true);
+            }
+        }
+
+        public void OnEquipClick()
+        {
+            if (selectedInventorySlotController.inventorySlot.inventoryItem is EquipableItem equipableItem)
+            {
+                characterInventoryController.EquipItem(equipableItem);
+                Refresh();
+            }
+            
         }
     }
 }
