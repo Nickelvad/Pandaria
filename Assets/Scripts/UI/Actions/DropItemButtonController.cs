@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using Pandaria.Items;
 using Pandaria.Characters.Actions;
 
-namespace Pandaria.UI
+namespace Pandaria.UI.Actions
 {
     public class DropItemButtonController : MonoBehaviour, IButtonAction
     {
@@ -13,7 +13,7 @@ namespace Pandaria.UI
         public bool isActive { get; private set; }
         public CharacterPickupController characterPickupController;
 
-        void Start()
+        void Awake()
         {
             button = GetComponentInChildren<Button>();
             SetButtonState(false);

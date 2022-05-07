@@ -17,6 +17,8 @@ namespace Pandaria
         public event EventHandler<GatherableResourceController> GatherableResourceUntracked;
         public event EventHandler<GatherableResourceController> GatherableResourceCollected;
         public event EventHandler<int> GatherableResourceProgress;
+        public event EventHandler<LootContainer> LootContainerTracked;
+        public event EventHandler<LootContainer> LootContainerUntracked;
         public event EventHandler<Vector3> CharacterMoved;
         public event EventHandler<int> CharacterStaminaChanged;
         public event EventHandler<int> CharacterHpChanged;
@@ -26,6 +28,7 @@ namespace Pandaria
         {
             GameObjectSpotted?.Invoke(sender, gameObject);
         }
+
         public void CallItemContainerTracked(object sender, PickableItemContainer itemContainer)
         {
             ItemContainerTracked?.Invoke(sender, itemContainer);
@@ -66,6 +69,16 @@ namespace Pandaria
             GatherableResourceProgress?.Invoke(sender, progress);
         }
 
+        public void CallLootContainerTracked(object sender, LootContainer lootContainer)
+        {
+            LootContainerTracked?.Invoke(sender, lootContainer);
+        }
+
+        public void CallLootContainerUntracked(object sender, LootContainer lootContainer)
+        {
+            LootContainerUntracked?.Invoke(sender, lootContainer);
+        }
+
         public void CallCharacterStaminaChanged(object sender, int currentStamina)
         {
             CharacterStaminaChanged?.Invoke(sender, currentStamina);
@@ -75,6 +88,7 @@ namespace Pandaria
         {
             CharacterMoved?.Invoke(sender, position);
         }
+
         public void CallCharacterHpChanged(object sender, int damage)
         {
             CharacterHpChanged?.Invoke(sender, damage);

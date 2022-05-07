@@ -13,7 +13,7 @@ namespace Pandaria.Characters.Actions
         public CharacterInventoryController characterInventoryController;
         private GatherableResourceController trackedGatherableResource;
 
-        void Start()
+        void Awake()
         {
             EventBus.Instance.GameObjectSpotted += ProcessSpottedGameObject;
             EventBus.Instance.CharacterMoved += ProcessCharacterMoved;

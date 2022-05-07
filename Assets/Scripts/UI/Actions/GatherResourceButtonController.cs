@@ -4,7 +4,7 @@ using UnityEngine;
 using Pandaria.Characters.Actions;
 using Pandaria.Gatherables;
 
-namespace Pandaria.UI
+namespace Pandaria.UI.Actions
 {
     public class GatherResourceButtonController : MonoBehaviour, IButtonAction
     {
@@ -12,7 +12,7 @@ namespace Pandaria.UI
         public CharacterGatheringController characterGatheringController;
         public bool isActive { get; private set; }
 
-        void Start()
+        void Awake()
         {
             EventBus.Instance.GatherableResourceTracked += OnGatherableResourceTracked;
             EventBus.Instance.GatherableResourceUntracked += OnGatherableResourceUntracked;

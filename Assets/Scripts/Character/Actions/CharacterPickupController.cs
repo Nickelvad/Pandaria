@@ -12,7 +12,7 @@ namespace Pandaria.Characters.Actions
         public PickedupItemContainer pickedupItemContainer;
         private PickableItemContainer trackedPickableItemContainer;
 
-        void Start()
+        void Awake()
         {
             EventBus.Instance.GameObjectSpotted += ProcessSpottedGameObject;
         }

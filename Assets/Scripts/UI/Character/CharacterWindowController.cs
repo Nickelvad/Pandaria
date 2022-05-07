@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Pandaria.Characters;
+
 namespace Pandaria.UI.Character
 {
     public class CharacterWindowController : MonoBehaviour

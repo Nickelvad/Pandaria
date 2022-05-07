@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Pandaria.UI
+namespace Pandaria.UI.Actions
     {
     public class ActionButtonController : MonoBehaviour
     {

@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using Pandaria.Items;
 using Pandaria.Characters.Actions;
 
-namespace Pandaria.UI
+namespace Pandaria.UI.Actions
 {
     public class PickupItemButtonController : MonoBehaviour, IButtonAction
     {
@@ -11,7 +11,7 @@ namespace Pandaria.UI
 
         public bool isActive { get; private set; }
 
-        void Start()
+        void Awake()
         {
             EventBus.Instance.ItemContainerTracked += OnItemContainerTracked;
             EventBus.Instance.ItemContainerUntracked += OnItemContainerUntracked;

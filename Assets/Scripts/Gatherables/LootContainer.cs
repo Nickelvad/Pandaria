@@ -8,14 +8,14 @@ namespace Pandaria.Gatherables
 {
 
     [Serializable]
-    public struct GatherableContent
+    public struct LootContent
     {
         public InventoryItem item;
         public int number;
     }
-    public class GatherableContainerController : MonoBehaviour
+    public class LootContainer : MonoBehaviour
     {
-        public List<GatherableContent> gatherableContent;
+        public List<LootContent> lootContent;
     }
 
 }

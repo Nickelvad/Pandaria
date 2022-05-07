@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace Pandaria.UI
+namespace Pandaria.UI.Actions
 {
     public interface IButtonAction 
     {
-        // Start is called before the first frame update
         public bool isActive { get; }
         public void OnClick();
 
