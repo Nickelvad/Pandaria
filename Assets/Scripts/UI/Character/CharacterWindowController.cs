@@ -35,6 +35,7 @@ namespace Pandaria.UI.Character
         void Awake()
         {
             closeButton.onClick.AddListener(CloseClick);
+            EventBus.Instance.EquipmentChanged += OnEquipmentChanged;
         }
 
         private void UpdateStats()
@@ -74,6 +75,11 @@ namespace Pandaria.UI.Character
             UpdateSlots();
         }
 
+        public void OnEquipmentChanged(object sender, EquipableItem equipableItem)
+        {
+            UpdateSlots();
+            UpdateStats();
+        }
 
         public void CloseClick()
         {

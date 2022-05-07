@@ -109,6 +109,10 @@ namespace Pandaria.Characters.Inventory
             {
                 slot.inventoryItem = null;
                 bool switched = EquipItem(equipableItem);
+                if (switched)
+                {
+                    EventBus.Instance.CallEquipmentChanged(this, equipableItem);
+                }
                 return switched;
             }
             return false;

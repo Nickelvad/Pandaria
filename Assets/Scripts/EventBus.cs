@@ -22,6 +22,7 @@ namespace Pandaria
         public event EventHandler<Vector3> CharacterMoved;
         public event EventHandler<int> CharacterStaminaChanged;
         public event EventHandler<int> CharacterHpChanged;
+        public event EventHandler<EquipableItem> EquipmentChanged;
 
 
         public void CallGameObjectSpotted(object sender, GameObject gameObject)
@@ -92,6 +93,11 @@ namespace Pandaria
         public void CallCharacterHpChanged(object sender, int damage)
         {
             CharacterHpChanged?.Invoke(sender, damage);
+        }
+   
+        public void CallEquipmentChanged(object sender, EquipableItem equipableItem)
+        {
+            EquipmentChanged?.Invoke(sender, equipableItem);
         }
     }
 }
