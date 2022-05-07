@@ -1,11 +1,17 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Pandaria.Gatherables;
+using Pandaria.Characters.Inventory;
+using Pandaria.Items;
 
 namespace Pandaria.Characters.Actions
 {
     public class CharacterLootController : MonoBehaviour
     {
+
         public LootContainer trackedLootContainer;
+        public CharacterInventoryController characterInventoryController;
+
         void Awake()
         {
             EventBus.Instance.GameObjectSpotted += ProcessSpottedGameObject;
@@ -51,15 +57,29 @@ namespace Pandaria.Characters.Actions
             trackedLootContainer = null;
         }
 
-        // public void DoAction()
-        // {
-        //     if (trackedLootContainer == null)
-        //     {
-        //         return;
-        //     }
+        public void TakeAll()
+        {
+            if (trackedLootContainer == null)
+            {
+                return;
+            }
 
-        //     EventBus.Instance.CallLootContainerOpen(this, trackedLootContainer);
-        // }
+            List<LootContent> slotsMovedToInventory = new List<LootContent>();
+            foreach (LootContent slot in trackedLootContainer.lootContent)
+            {
+                if (characterInventoryController.AddItem(slot.item, slot.number))
+                {
+                    slotsMovedToInventory.Add(slot);
+                }
+            }
+
+            foreach (LootContent slotToDelete in slotsMovedToInventory)
+            {
+                trackedLootContainer.lootContent.Remove(slotToDelete);
+            }
+            
+
+        }
     }
 }
 
