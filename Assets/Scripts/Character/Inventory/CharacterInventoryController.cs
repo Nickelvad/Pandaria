@@ -6,6 +6,22 @@ using Pandaria.Items;
 
 namespace Pandaria.Characters.Inventory
 {
+
+    public class SlotStatus
+    {
+        public GameObject parent;
+        public GameObject equipmentItem;
+    }
+    public class WeaponSlotStatus : SlotStatus
+    {
+        public Weapon weapon;
+    }
+
+    public class ArmorSlotStatus : SlotStatus
+    {
+        public Armor armor;
+    }
+
     public class CharacterInventoryController : MonoBehaviour
     {
         public int backpackSlotsCount = 21;
@@ -13,8 +29,18 @@ namespace Pandaria.Characters.Inventory
         [SerializeField] public List<InventorySlot> backpackSlots {get; private set;}
         [SerializeField] public List<InventorySlot> quickSlots {get; private set;}
 
+        public GameObject primaryWeaponParent;
+        public GameObject secondaryWeaponParent;
+        private Dictionary<WeaponSlot, WeaponSlotStatus> equipedWeapons;
+        private Dictionary<ArmorSlot, ArmorSlotStatus> equipedArmor;
         void Awake()
         {
+            equipedWeapons = new Dictionary<WeaponSlot, WeaponSlotStatus>()
+            {
+                {WeaponSlot.Primary, new WeaponSlotStatus(){parent = primaryWeaponParent}},
+                {WeaponSlot.Secondary, new WeaponSlotStatus(){parent = secondaryWeaponParent}}
+            };
+            equipedArmor = new Dictionary<ArmorSlot, ArmorSlotStatus>();
             backpackSlots = new List<InventorySlot>(backpackSlotsCount);
             quickSlots = new List<InventorySlot>(quickSlotsCount);
             for (int i = 0; i <= backpackSlotsCount - 1; i++)
@@ -65,6 +91,34 @@ namespace Pandaria.Characters.Inventory
                 slot.amount -= amountLeft;
                 amountLeft = 0;
             }
+        }
+
+        public bool EquipItem(EquipableItem item)
+        {
+            if (item is Weapon weapon)
+            {
+                var weaponSlotStatus = equipedWeapons[weapon.weaponSlot];
+                if (weaponSlotStatus.weapon != null)
+                {
+                    bool movedToBackpack = AddItem(weaponSlotStatus.weapon, 1);
+                    if (!movedToBackpack)
+                    {
+                        return false;
+                    }
+                }
+                
+                ChangeEquipment(weaponSlotStatus.equipmentItem, item.model, weaponSlotStatus.parent);
+                weaponSlotStatus.weapon = weapon;
+                return true;
+            }
+
+            return false;
+        }
+
+        private void ChangeEquipment(GameObject oldItem, GameObject newItem, GameObject parent)
+        {
+            DestroyImmediate(oldItem);
+            Instantiate(newItem, newItem.transform.position, Quaternion.identity, parent.transform);
         }
 
         private InventorySlot FindFreeInventorySlotForItem(InventoryItem inventoryItem)

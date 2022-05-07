@@ -17,6 +17,10 @@ namespace Pandaria.Characters
         public Transform groundChecker;
         public LayerMask whatIsGround;
 
+        public Animator animator;
+        public AnimationClip movementAnimationClip;
+        public AnimationClip idleAnimationClip;
+
         private InputController inputController;
         private Rigidbody rigidbody_;
         private Vector3 moveDirection;
@@ -64,10 +68,18 @@ namespace Pandaria.Characters
 
             isGrounded = GetGrounded();
             moveDirection = inputController.GetInputDirection();
+
+            if (moveDirection != Vector3.zero)
+            {
+                moveDirection = Vector3.Slerp(transform.forward, moveDirection, Time.deltaTime * 5);
+            }
+
             if (!isGrounded)
             {
                 moveDirection = rigidbody_.transform.forward;
             }
+            
+
             moveDirection.Normalize();
             return moveDirection;
         }
@@ -103,6 +115,15 @@ namespace Pandaria.Characters
             }
         }
 
+        void PlayAnimation(string name)
+        {
+            var state = animator.GetCurrentAnimatorStateInfo(0);
+            if (!state.IsName(name))
+            {
+                animator.Play(name, 0);
+            }
+        }
+
         void ResetDashCooldawn()
         {
             dashIsOnCooldawn = false;
@@ -125,6 +146,11 @@ namespace Pandaria.Characters
                     rigidbody_.rotation = Quaternion.Slerp(rigidbody_.rotation, newRotation, Time.deltaTime * 5);
                 }
                 rigidbody_.MovePosition(rigidbody_.position + moveDirection * speed * Time.deltaTime);
+                PlayAnimation(movementAnimationClip.name);
+            }
+            else
+            {
+                PlayAnimation(idleAnimationClip.name);
             }
         }
 
