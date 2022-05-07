@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Pandaria.Gatherables;
 
 namespace Pandaria.UI.LootContainers
 {
@@ -10,6 +11,10 @@ namespace Pandaria.UI.LootContainers
         void Awake()
         {
             closeButton.onClick.AddListener(closeDialog);
+        }
+        public void Initialize(LootContainer lootContainer)
+        {
+
         }
 
         void closeDialog()

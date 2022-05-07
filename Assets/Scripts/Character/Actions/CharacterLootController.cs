@@ -5,7 +5,7 @@ namespace Pandaria.Characters.Actions
 {
     public class CharacterLootController : MonoBehaviour
     {
-        private LootContainer trackedLootContainer;
+        public LootContainer trackedLootContainer;
         void Awake()
         {
             EventBus.Instance.GameObjectSpotted += ProcessSpottedGameObject;
@@ -13,18 +13,9 @@ namespace Pandaria.Characters.Actions
 
         void ProcessSpottedGameObject(object sender, GameObject spottedGameObject)
         {
-            LootContainer lootContainer = GetLootContainer(spottedGameObject);;
+            LootContainer lootContainer = GetLootContainer(spottedGameObject);
             if (lootContainer == trackedLootContainer)
             {
-                return;
-            }
-
-            if (lootContainer != null)
-            {
-                if (trackedLootContainer != null)
-                {
-                    UntrackLootContainer();
-                }
                 return;
             }
 
@@ -51,15 +42,24 @@ namespace Pandaria.Characters.Actions
         private void TrackLootContainer(LootContainer lootContainer)
         {
             trackedLootContainer = lootContainer;
-            // EventBus.Instance.CallItemContainerTracked(this, trackedLootContainer);
+            EventBus.Instance.CallLootContainerTracked(this, trackedLootContainer);
         }
 
         private void UntrackLootContainer()
         {
-            // EventBus.Instance.CallItemContainerUntracked(this, trackedLootContainer);
+            EventBus.Instance.CallLootContainerUntracked(this, trackedLootContainer);
             trackedLootContainer = null;
-            
         }
+
+        // public void DoAction()
+        // {
+        //     if (trackedLootContainer == null)
+        //     {
+        //         return;
+        //     }
+
+        //     EventBus.Instance.CallLootContainerOpen(this, trackedLootContainer);
+        // }
     }
 }
 

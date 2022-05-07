@@ -1,12 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Pandaria.Characters.Actions;
 using Pandaria.Gatherables;
+using Pandaria.UI.LootContainers;
 
 namespace Pandaria.UI.Actions
 {
     public class LootButtonController : MonoBehaviour, IButtonAction
 {
+        public CharacterLootController characterLootController;
+        public GameObject lootContainerWindow;
         public bool isActive { get; private set; }
 
         void Awake()
@@ -23,16 +25,19 @@ namespace Pandaria.UI.Actions
 
         private void OnLootContainerTracked(object sender, LootContainer lootContainer)
         {
-            SetButtonState(false);
+            SetButtonState(true);
         }
 
         private void OnLootContainerUntracked(object sender, LootContainer lootContainer)
         {
-            SetButtonState(true);
+            SetButtonState(false);
         }
 
         public void OnClick()
         {
+            lootContainerWindow.SetActive(true);
+            LootContainerWindowController lootContainerWindowController = lootContainerWindow.GetComponent<LootContainerWindowController>();
+            lootContainerWindowController.Initialize(characterLootController.trackedLootContainer);
         }
 }
 
