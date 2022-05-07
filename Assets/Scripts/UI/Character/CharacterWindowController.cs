@@ -2,6 +2,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Pandaria.Characters;
+using Pandaria.Characters.Inventory;
+using Pandaria.UI.Inventory;
+using Pandaria.Items;
 
 namespace Pandaria.UI.Character
 {
@@ -9,6 +12,17 @@ namespace Pandaria.UI.Character
     {
         public Button closeButton;
         public CharacterStatusController characterStatusController;
+        public CharacterInventoryController characterInventoryController;
+        public CharacterSlotController helmSlot;
+        public CharacterSlotController shouldersSlot;
+        public CharacterSlotController chestSlot;
+        public CharacterSlotController armsSlot;
+        public CharacterSlotController weaponPrimarySlot;
+        public CharacterSlotController legsSlot;
+        public CharacterSlotController bootsSlot;
+        public CharacterSlotController necklaceSlot;
+        public CharacterSlotController ringSlot;
+        public CharacterSlotController weaponSecondarySlot;
         public TextMeshProUGUI healthValueText;
         public TextMeshProUGUI staminaValueText;
         public TextMeshProUGUI manaValueText;
@@ -35,9 +49,29 @@ namespace Pandaria.UI.Character
             );
         }
 
+        private void UpdateSlots()
+        {
+           InitializeSlot(helmSlot, characterInventoryController.equipedArmor[ArmorSlot.Helm].armor);
+           InitializeSlot(shouldersSlot, characterInventoryController.equipedArmor[ArmorSlot.Shoulders].armor);
+           InitializeSlot(chestSlot, characterInventoryController.equipedArmor[ArmorSlot.Chest].armor);
+           InitializeSlot(armsSlot, characterInventoryController.equipedArmor[ArmorSlot.Arms].armor);
+           InitializeSlot(legsSlot, characterInventoryController.equipedArmor[ArmorSlot.Legs].armor);
+           InitializeSlot(bootsSlot, characterInventoryController.equipedArmor[ArmorSlot.Boots].armor);
+           InitializeSlot(necklaceSlot, characterInventoryController.equipedArmor[ArmorSlot.Necklace].armor);
+           InitializeSlot(ringSlot, characterInventoryController.equipedArmor[ArmorSlot.Ring].armor);
+           InitializeSlot(weaponPrimarySlot, characterInventoryController.equipedWeapons[WeaponSlot.Primary].weapon);
+           InitializeSlot(weaponSecondarySlot, characterInventoryController.equipedWeapons[WeaponSlot.Secondary].weapon);
+        } 
+
+        private void InitializeSlot(CharacterSlotController slot, EquipableItem item)
+        {
+            slot.Initialize(item);
+        }
+
         void OnEnable()
         {
             UpdateStats();
+            UpdateSlots();
         }
 
 

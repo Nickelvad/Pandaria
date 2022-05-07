@@ -96,7 +96,7 @@ namespace Pandaria.UI.Inventory
         {
             if (selectedInventorySlotController.inventorySlot.inventoryItem is EquipableItem equipableItem)
             {
-                characterInventoryController.EquipItem(equipableItem);
+                characterInventoryController.EquipSlot(selectedInventorySlotController.inventorySlot);
                 Refresh();
             }
             

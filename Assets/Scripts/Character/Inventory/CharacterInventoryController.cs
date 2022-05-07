@@ -31,8 +31,8 @@ namespace Pandaria.Characters.Inventory
 
         public GameObject primaryWeaponParent;
         public GameObject secondaryWeaponParent;
-        private Dictionary<WeaponSlot, WeaponSlotStatus> equipedWeapons;
-        private Dictionary<ArmorSlot, ArmorSlotStatus> equipedArmor;
+        public Dictionary<WeaponSlot, WeaponSlotStatus> equipedWeapons;
+        public Dictionary<ArmorSlot, ArmorSlotStatus> equipedArmor;
         void Awake()
         {
             equipedWeapons = new Dictionary<WeaponSlot, WeaponSlotStatus>()
@@ -40,7 +40,17 @@ namespace Pandaria.Characters.Inventory
                 {WeaponSlot.Primary, new WeaponSlotStatus(){parent = primaryWeaponParent}},
                 {WeaponSlot.Secondary, new WeaponSlotStatus(){parent = secondaryWeaponParent}}
             };
-            equipedArmor = new Dictionary<ArmorSlot, ArmorSlotStatus>();
+            equipedArmor = new Dictionary<ArmorSlot, ArmorSlotStatus>()
+            {
+                {ArmorSlot.Helm, new ArmorSlotStatus(){parent = null}},
+                {ArmorSlot.Shoulders, new ArmorSlotStatus(){parent = null}},
+                {ArmorSlot.Chest, new ArmorSlotStatus(){parent = null}},
+                {ArmorSlot.Arms, new ArmorSlotStatus(){parent = null}},
+                {ArmorSlot.Legs, new ArmorSlotStatus(){parent = null}},
+                {ArmorSlot.Boots, new ArmorSlotStatus(){parent = null}},
+                {ArmorSlot.Necklace, new ArmorSlotStatus(){parent = null}},
+                {ArmorSlot.Ring, new ArmorSlotStatus(){parent = null}},
+            };
             backpackSlots = new List<InventorySlot>(backpackSlotsCount);
             quickSlots = new List<InventorySlot>(quickSlotsCount);
             for (int i = 0; i <= backpackSlotsCount - 1; i++)
@@ -93,6 +103,16 @@ namespace Pandaria.Characters.Inventory
             }
         }
 
+        public bool EquipSlot(InventorySlot slot)
+        {
+            if (slot.inventoryItem is EquipableItem equipableItem)
+            {
+                slot.inventoryItem = null;
+                bool switched = EquipItem(equipableItem);
+                return switched;
+            }
+            return false;
+        }
         public bool EquipItem(EquipableItem item)
         {
             if (item is Weapon weapon)
