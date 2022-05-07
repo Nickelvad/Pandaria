@@ -16,6 +16,8 @@ MonoBehaviour:
   inventoryImage: {fileID: 21300000, guid: 402737b445533e249a8ff9b8b64f9a0d, type: 3}
   equipableSlotType: 1
   model: {fileID: 8260346029271310062, guid: 2ec36127654c6a14a8dc324b0caba3c5, type: 3}
+  modelPosition: {x: 0.15, y: 0.09, z: -0.17}
+  modelRotation: {x: -180, y: 0, z: 0}
   weaponSlot: 0
   minAttack: 1
   maxAttack: 5

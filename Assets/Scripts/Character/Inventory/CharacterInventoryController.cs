@@ -107,7 +107,7 @@ namespace Pandaria.Characters.Inventory
                     }
                 }
                 
-                ChangeEquipment(weaponSlotStatus.equipmentItem, item.model, weaponSlotStatus.parent);
+                ChangeEquipment(weaponSlotStatus.equipmentItem, item, weaponSlotStatus.parent);
                 weaponSlotStatus.weapon = weapon;
                 return true;
             }
@@ -115,10 +115,12 @@ namespace Pandaria.Characters.Inventory
             return false;
         }
 
-        private void ChangeEquipment(GameObject oldItem, GameObject newItem, GameObject parent)
+        private void ChangeEquipment(GameObject oldItem, EquipableItem newItem, GameObject parent)
         {
             DestroyImmediate(oldItem);
-            Instantiate(newItem, newItem.transform.position, Quaternion.identity, parent.transform);
+            var createdItem = Instantiate(newItem.model, parent.transform.position, newItem.model.transform.rotation, parent.transform);
+            createdItem.transform.localPosition = newItem.modelPosition;
+            createdItem.transform.localEulerAngles = newItem.modelRotation;
         }
 
         private InventorySlot FindFreeInventorySlotForItem(InventoryItem inventoryItem)

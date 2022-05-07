@@ -13,6 +13,8 @@ namespace Pandaria.Items
     {
         public EquipableSlotType equipableSlotType;
         public GameObject model;
+        public Vector3 modelPosition;
+        public Vector3 modelRotation;
     }
 
 }
