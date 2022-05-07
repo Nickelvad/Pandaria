@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Pandaria.Resources
+namespace Pandaria.Gatherables
 {
     [Serializable]
     public class GatherableResourceSettings

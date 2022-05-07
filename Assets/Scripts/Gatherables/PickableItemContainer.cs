@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Pandaria.Items
 {
-    public class ItemContainer : MonoBehaviour
+    public class PickableItemContainer : MonoBehaviour
     {
         public bool isPickable;
         public bool isDroppable;

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Pandaria.Resources;
+using Pandaria.Gatherables;
 
 namespace Pandaria.Islands
 {

@@ -22,12 +22,12 @@ namespace Pandaria.UI
             isActive = enabled_;
         }
 
-        private void OnItemContainerUntracked(object sender, ItemContainer itemContainer)
+        private void OnItemContainerUntracked(object sender, PickableItemContainer itemContainer)
         {
             SetButtonState(false);
         }
 
-        private void OnItemContainerTracked(object sender, ItemContainer itemContainer)
+        private void OnItemContainerTracked(object sender, PickableItemContainer itemContainer)
         {
             SetButtonState(true);
         }

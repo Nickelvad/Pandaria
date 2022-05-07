@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pandaria.Items;
 
-namespace Pandaria.Resources
+namespace Pandaria.Gatherables
 {
     [System.Serializable]
     [CreateAssetMenu(fileName = "Gatherable Resource", menuName = "Scriptables/Gatherable Resource", order=1)]

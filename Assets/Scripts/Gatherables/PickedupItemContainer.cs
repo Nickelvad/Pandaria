@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-namespace Pandaria.Items
+namespace Pandaria.Gatherables
 {
     public class PickedupItemContainer
     {

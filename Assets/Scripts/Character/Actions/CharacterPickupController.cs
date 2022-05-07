@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Pandaria.Items;
+using Pandaria.Gatherables;
 
 namespace Pandaria.Characters.Actions
 {
@@ -9,7 +10,7 @@ namespace Pandaria.Characters.Actions
         private RaycastHit hit;
         public Transform slot;
         public PickedupItemContainer pickedupItemContainer;
-        private ItemContainer trackedPickableItemContainer;
+        private PickableItemContainer trackedPickableItemContainer;
 
         void Start()
         {
@@ -18,7 +19,7 @@ namespace Pandaria.Characters.Actions
 
         void ProcessSpottedGameObject(object sender, GameObject spottedGameObject)
         {
-            ItemContainer itemContainer = GetItem(spottedGameObject);
+            PickableItemContainer itemContainer = GetItem(spottedGameObject);
 
             if (itemContainer == trackedPickableItemContainer)
             {
@@ -46,16 +47,16 @@ namespace Pandaria.Characters.Actions
 
         }
 
-        private ItemContainer GetItem(GameObject spottedGameObject)
+        private PickableItemContainer GetItem(GameObject spottedGameObject)
         {   if (spottedGameObject == null)
             {
                 return null;
             }
-            ItemContainer itemContainer = spottedGameObject.transform.GetComponent<ItemContainer>();
+            PickableItemContainer itemContainer = spottedGameObject.transform.GetComponent<PickableItemContainer>();
             return itemContainer;
         }
 
-        private void TrackPickableItemContainer(ItemContainer itemContainer)
+        private void TrackPickableItemContainer(PickableItemContainer itemContainer)
         {
             trackedPickableItemContainer = itemContainer;
             EventBus.Instance.CallItemContainerTracked(this, trackedPickableItemContainer);

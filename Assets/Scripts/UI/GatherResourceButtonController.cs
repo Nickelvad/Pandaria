@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Pandaria.Characters.Actions;
-using Pandaria.Resources;
+using Pandaria.Gatherables;
 
 namespace Pandaria.UI
 {

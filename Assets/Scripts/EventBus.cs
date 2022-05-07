@@ -2,17 +2,17 @@
 using System;
 using UnityEngine;
 using Pandaria.Items;
-using Pandaria.Resources;
+using Pandaria.Gatherables;
 
 namespace Pandaria
 {
     public class EventBus : Singleton<EventBus>
     {
         public event EventHandler<GameObject> GameObjectSpotted;
-        public event EventHandler<ItemContainer> ItemContainerTracked;
-        public event EventHandler<ItemContainer> ItemContainerUntracked;
-        public event EventHandler<ItemContainer> ItemContainerPickedup;
-        public event EventHandler<ItemContainer> ItemContainerDropped;
+        public event EventHandler<PickableItemContainer> ItemContainerTracked;
+        public event EventHandler<PickableItemContainer> ItemContainerUntracked;
+        public event EventHandler<PickableItemContainer> ItemContainerPickedup;
+        public event EventHandler<PickableItemContainer> ItemContainerDropped;
         public event EventHandler<GatherableResourceController> GatherableResourceTracked;
         public event EventHandler<GatherableResourceController> GatherableResourceUntracked;
         public event EventHandler<GatherableResourceController> GatherableResourceCollected;
@@ -26,22 +26,22 @@ namespace Pandaria
         {
             GameObjectSpotted?.Invoke(sender, gameObject);
         }
-        public void CallItemContainerTracked(object sender, ItemContainer itemContainer)
+        public void CallItemContainerTracked(object sender, PickableItemContainer itemContainer)
         {
             ItemContainerTracked?.Invoke(sender, itemContainer);
         }
 
-        public void CallItemContainerUntracked(object sender, ItemContainer itemContainer)
+        public void CallItemContainerUntracked(object sender, PickableItemContainer itemContainer)
         {
             ItemContainerUntracked?.Invoke(sender, itemContainer);
         }
 
-        public void CallItemContainerPickedup(object sender, ItemContainer itemContainer)
+        public void CallItemContainerPickedup(object sender, PickableItemContainer itemContainer)
         {
             ItemContainerPickedup?.Invoke(sender, itemContainer);
         }
 
-        public void CallItemContainerDropped(object sender, ItemContainer itemContainer)
+        public void CallItemContainerDropped(object sender, PickableItemContainer itemContainer)
         {
             ItemContainerDropped?.Invoke(sender, itemContainer);
         }

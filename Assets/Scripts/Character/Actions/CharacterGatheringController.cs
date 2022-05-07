@@ -1,6 +1,6 @@
 using UnityEngine;
 using Pandaria.Characters.Inventory;
-using Pandaria.Resources;
+using Pandaria.Gatherables;
 using Pandaria.Items;
 
 namespace Pandaria.Characters.Actions

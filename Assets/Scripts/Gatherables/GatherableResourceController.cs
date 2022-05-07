@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Pandaria.Resources
+namespace Pandaria.Gatherables
 {
     public class GatherableResourceController : MonoBehaviour
     {
