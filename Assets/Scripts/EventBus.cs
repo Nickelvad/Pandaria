@@ -1,6 +1,7 @@
 
 using System;
 using UnityEngine;
+using Pandaria.Characters.Attributes;
 using Pandaria.Items;
 using Pandaria.Gatherables;
 
@@ -23,6 +24,7 @@ namespace Pandaria
         public event EventHandler<int> CharacterStaminaChanged;
         public event EventHandler<int> CharacterHpChanged;
         public event EventHandler<EquipableItem> EquipmentChanged;
+        public event EventHandler<IAttribute> AttributeChanged;
 
 
         public void CallGameObjectSpotted(object sender, GameObject gameObject)
@@ -98,6 +100,11 @@ namespace Pandaria
         public void CallEquipmentChanged(object sender, EquipableItem equipableItem)
         {
             EquipmentChanged?.Invoke(sender, equipableItem);
+        }
+
+        public void CallAttributeChanged(object sender, IAttribute attribute)
+        {
+            AttributeChanged?.Invoke(sender, attribute);
         }
     }
 }

@@ -1,7 +1,7 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Pandaria.Characters;
 using Pandaria.Characters.Inventory;
 using Pandaria.Characters.Attributes;
 using Pandaria.Items;
@@ -31,11 +31,23 @@ namespace Pandaria.UI.Character
         public TextMeshProUGUI attackValueText;
         public TextMeshProUGUI attackSpeedValueText;    
         public TextMeshProUGUI critRatingValueText;
+        private Dictionary<IAttribute, TextMeshProUGUI> values;
 
         void Awake()
         {
             closeButton.onClick.AddListener(CloseClick);
             EventBus.Instance.EquipmentChanged += OnEquipmentChanged;
+
+            values = new Dictionary<IAttribute, TextMeshProUGUI>
+            {
+                {CharacterAttributesController.Instance.health, healthValueText},
+                {CharacterAttributesController.Instance.stamina, staminaValueText},
+                {CharacterAttributesController.Instance.mana, manaValueText},
+                {CharacterAttributesController.Instance.defence, defenceValueText},
+                {CharacterAttributesController.Instance.critDefenceRating, critDefenceRatingValueText},
+                {CharacterAttributesController.Instance.attackSpeed, attackSpeedValueText},
+                {CharacterAttributesController.Instance.critRating, critRatingValueText},
+            };
         }
 
         private void UpdateStats()
@@ -86,6 +98,32 @@ namespace Pandaria.UI.Character
         public void CloseClick()
         {
             gameObject.SetActive(false);
+        }
+
+        void OnAttributeChanged(object sender, IAttribute attribute)
+        {
+            if (attribute is MinAttack minAttack)
+            {
+                attackValueText.text = string.Format(
+                    "{0} - {1}",
+                    minAttack.currentValue.ToString(),
+                    characterStatusController.maxAttack.currentValue.ToString()
+                );
+                return;
+            }
+
+            if (attribute is MaxAttack maxAttack)
+            {
+                attackValueText.text = string.Format(
+                    "{0} - {1}",
+                    CharacterAttributesController.Instance.minAttack.currentValue.ToString(),
+                    maxAttack.currentValue.ToString()
+                );
+                return;
+            }
+
+            var text = values[attribute];
+            text.text = attribute.currentValue.ToString();
         }
     }
 

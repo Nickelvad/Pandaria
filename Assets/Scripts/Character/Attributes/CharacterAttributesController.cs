@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Pandaria.Items;
 
@@ -15,6 +16,7 @@ namespace Pandaria.Characters.Attributes
         [HideInInspector] public AttackSpeed attackSpeed;
         [HideInInspector] public MinAttack minAttack;
         [HideInInspector] public MaxAttack maxAttack;
+        private List<IAttribute> attributes;
 
         public void Awake()
         {
@@ -27,6 +29,10 @@ namespace Pandaria.Characters.Attributes
             attackSpeed = attributesContainer.GetComponent<AttackSpeed>();
             minAttack = attributesContainer.GetComponent<MinAttack>();
             maxAttack = attributesContainer.GetComponent<MaxAttack>();
+            attributes = new List<IAttribute>
+            {
+                health, stamina, mana, defence, critDefenceRating, critRating, attackSpeed, minAttack, maxAttack
+            };
             EventBus.Instance.EquipmentChanged += RecalculateAttributes;
         }
 
@@ -47,7 +53,10 @@ namespace Pandaria.Characters.Attributes
     
         void RecalculateAttributes(object sender, EquipableItem equipmentItem)
         {
-            //
+            foreach (IAttribute attribute in attributes)
+            {
+                attribute.Recalculate();
+            }
         }
     }
 

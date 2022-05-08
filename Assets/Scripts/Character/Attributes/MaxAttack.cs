@@ -1,4 +1,5 @@
 using UnityEngine;
+using Pandaria.Characters.Inventory;
 
 namespace Pandaria.Characters.Attributes
 {
@@ -22,8 +23,19 @@ namespace Pandaria.Characters.Attributes
 
         public void Recalculate()
         {
-            currentValue = baseValue;
-            maxValue = baseValue;
+            float newValue = baseValue;
+            foreach (var slot in CharacterInventoryController.Instance.equipedWeapons)
+            {
+                if (slot.Value.weapon != null)
+                {
+                    newValue += slot.Value.weapon.maxAttack;
+                }
+                
+            }
+
+            currentValue = newValue;
+            maxValue = newValue;
+            EventBus.Instance.CallAttributeChanged(this, this);
         }
     }
 
