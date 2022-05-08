@@ -22,7 +22,7 @@ namespace Pandaria.Characters.Inventory
         public Armor armor;
     }
 
-    public class CharacterInventoryController : MonoBehaviour
+    public class CharacterInventoryController : Singleton<CharacterInventoryController>
     {
         public int backpackSlotsCount = 21;
         public int quickSlotsCount = 4;

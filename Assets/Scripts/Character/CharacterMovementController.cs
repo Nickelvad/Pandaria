@@ -87,7 +87,7 @@ namespace Pandaria.Characters
         void Dash()
         {
             bool shouldDash = Input.GetButtonDown("Dash");
-            if (!dashIsOnCooldawn && !isDashing && shouldDash && character.canDash() && isGrounded)
+            if (!dashIsOnCooldawn && !isDashing && shouldDash && character.CanDash() && isGrounded)
             {
                 isDashing = true;
                 dashIsOnCooldawn = true;

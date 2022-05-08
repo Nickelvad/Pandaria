@@ -1,0 +1,25 @@
+using UnityEngine;
+
+namespace Pandaria.Characters.Attributes
+{
+    public class Defence : MonoBehaviour, IAttribute
+    {
+        public float baseValue = 0f;
+
+        public float currentValue { get ; set; }
+        public float maxValue { get ; set; }
+
+        void Awake()
+        {
+            currentValue = baseValue;
+            maxValue = baseValue;
+        }
+
+        public void Recalculate()
+        {
+            currentValue = baseValue;
+            maxValue = baseValue;
+        }
+    }
+
+}

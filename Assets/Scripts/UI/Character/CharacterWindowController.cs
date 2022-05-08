@@ -40,11 +40,11 @@ namespace Pandaria.UI.Character
 
         private void UpdateStats()
         {
-            healthValueText.text = characterStatusController.hp.ToString();
-            staminaValueText.text = characterStatusController.stamina.ToString();
-            manaValueText.text = characterStatusController.mana.ToString();
-            defenceValueText.text = characterStatusController.defence.ToString();
-            critDefenceRatingValueText.text = characterStatusController.critDefenceRating.ToString();
+            healthValueText.text = characterStatusController.health.maxValue.ToString();
+            staminaValueText.text = characterStatusController.stamina.maxValue.ToString();
+            manaValueText.text = characterStatusController.mana.maxValue.ToString();
+            defenceValueText.text = characterStatusController.defence.currentValue.ToString();
+            critDefenceRatingValueText.text = characterStatusController.critDefenceRating.currentValue.ToString();
             attackValueText.text = string.Format(
                 "{0} - {1}", characterStatusController.attackMin.ToString(), characterStatusController.attackMax.ToString()
             );

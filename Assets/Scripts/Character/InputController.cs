@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Pandaria.Characters
 {
 
-    public class InputController : MonoBehaviour
+    public class InputController : Singleton<InputController>
     {
         public Joystick.Joystick joystick;
 
