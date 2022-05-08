@@ -46,7 +46,9 @@ namespace Pandaria.UI.Character
             defenceValueText.text = characterStatusController.defence.currentValue.ToString();
             critDefenceRatingValueText.text = characterStatusController.critDefenceRating.currentValue.ToString();
             attackValueText.text = string.Format(
-                "{0} - {1}", characterStatusController.attackMin.ToString(), characterStatusController.attackMax.ToString()
+                "{0} - {1}",
+                characterStatusController.minAttack.currentValue.ToString(),
+                characterStatusController.maxAttack.currentValue.ToString()
             );
         }
 
