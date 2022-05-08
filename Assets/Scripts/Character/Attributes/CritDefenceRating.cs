@@ -15,6 +15,11 @@ namespace Pandaria.Characters.Attributes
             maxValue = baseValue;
         }
 
+        void Start()
+        {
+            Recalculate();
+        }
+
         public void Recalculate()
         {
             currentValue = baseValue;

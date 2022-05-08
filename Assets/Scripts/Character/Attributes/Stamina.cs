@@ -16,6 +16,11 @@ namespace Pandaria.Characters.Attributes
             maxValue = baseValue;
             InvokeRepeating(nameof(UpdateStamina), 1, 1);
         }
+
+        void Start()
+        {
+            Recalculate();
+        }
         
         public bool CanDash()
         {

@@ -1,11 +1,11 @@
 using UnityEngine;
+using Pandaria.Characters.Attributes;
 
 namespace Pandaria.Characters
 {
 
     public class CharacterMovementController : MonoBehaviour
     {
-        public CharacterStatusController character;
         public float speed = 3.0f;
         public float dashDistance = 8.0f;
         public float dashMultiplier = 2.0f;
@@ -87,7 +87,7 @@ namespace Pandaria.Characters
         void Dash()
         {
             bool shouldDash = Input.GetButtonDown("Dash");
-            if (!dashIsOnCooldawn && !isDashing && shouldDash && character.CanDash() && isGrounded)
+            if (!dashIsOnCooldawn && !isDashing && shouldDash && CharacterAttributesController.Instance.CanDash() && isGrounded)
             {
                 isDashing = true;
                 dashIsOnCooldawn = true;
@@ -101,7 +101,7 @@ namespace Pandaria.Characters
                     )
                 );
                 rigidbody_.AddForce(dashVelocity, ForceMode.VelocityChange);
-                character.ApplyDash();
+                CharacterAttributesController.Instance.ApplyDash();
                 Invoke(nameof(ResetIsDashing), dashDuration);
                 Invoke(nameof(ResetDashCooldawn), dashCooldawn);
             }

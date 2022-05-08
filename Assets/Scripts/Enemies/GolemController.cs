@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using Pandaria.Characters;
+using Pandaria.Characters.Attributes;
 
 namespace Pandaria.Enemies
 {
@@ -169,20 +169,18 @@ namespace Pandaria.Enemies
 
         public void ExtraOnCollisionEnter(GameObject notifier, Collision collision)
         {
-            Debug.Log(collision.gameObject.name);
-            Characters.CharacterStatusController character = collision.rigidbody.gameObject.GetComponent<Characters.CharacterStatusController>();
-            if (character != null)
+            CharacterAttributesController characterAttributeController = collision.rigidbody.GetComponent<CharacterAttributesController>();
+            if (characterAttributeController != null)
             {
-                character.ApplyDamage(damage);
+                characterAttributeController.ApplyDamage(damage);
             }
         }
         public void ExtraOnTriggerEnter(GameObject notifier, Collider other)
         {
-            Characters.CharacterStatusController character = other.gameObject.GetComponent<Characters.CharacterStatusController>();
-            if (character != null && isAttacking && notifier.name == "Index_Proximal_R")
+            CharacterAttributesController characterAttributeController = other.GetComponent<CharacterAttributesController>();
+            if (characterAttributeController != null && isAttacking && notifier.name == "Index_Proximal_R")
             {
-                Debug.Log(gameObject.name);
-                character.ApplyDamage(damage);
+                characterAttributeController.ApplyDamage(damage);
             }
         }
 

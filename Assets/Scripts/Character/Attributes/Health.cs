@@ -14,6 +14,11 @@ namespace Pandaria.Characters.Attributes
             currentValue = baseValue;
             maxValue = baseValue;
         }
+
+        void Start()
+        {
+            Recalculate();
+        }
         
         public void ApplyDamage(float damage)
         {

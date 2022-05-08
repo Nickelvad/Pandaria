@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using Pandaria.Characters;
 using Pandaria.Characters.Inventory;
-using Pandaria.UI.Inventory;
+using Pandaria.Characters.Attributes;
 using Pandaria.Items;
 
 namespace Pandaria.UI.Character
@@ -11,7 +11,7 @@ namespace Pandaria.UI.Character
     public class CharacterWindowController : MonoBehaviour
     {
         public Button closeButton;
-        public CharacterStatusController characterStatusController;
+        public CharacterAttributesController characterStatusController;
         public CharacterInventoryController characterInventoryController;
         public CharacterSlotController helmSlot;
         public CharacterSlotController shouldersSlot;

@@ -1,10 +1,9 @@
 using UnityEngine;
 using Pandaria.Items;
-using Pandaria.Characters.Attributes;
 
-namespace Pandaria.Characters
+namespace Pandaria.Characters.Attributes
 {
-    public class CharacterStatusController : Singleton<CharacterStatusController>
+    public class CharacterAttributesController : Singleton<CharacterAttributesController>
     {
         public GameObject attributesContainer;
         [HideInInspector] public Health health;
@@ -48,7 +47,7 @@ namespace Pandaria.Characters
     
         void RecalculateAttributes(object sender, EquipableItem equipmentItem)
         {
-            
+            //
         }
     }
 

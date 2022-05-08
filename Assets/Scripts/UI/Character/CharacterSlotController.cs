@@ -13,11 +13,9 @@ namespace Pandaria.UI.Character
         public Image inventorySlotImage;
         public void Initialize(EquipableItem equipableItem)
         {
-            Debug.Log(equipableItem);
             this.equipableItem = equipableItem;
             if (equipableItem != null)
             {
-                Debug.Log("Setting image");
                 inventorySlotImage.enabled = true;
                 inventorySlotImage.sprite = equipableItem.inventoryImage;
             }
