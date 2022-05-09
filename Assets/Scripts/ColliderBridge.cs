@@ -15,12 +15,10 @@ namespace Pandaria
 
         void OnCollisionEnter(Collision collision)
         {
-            Debug.Log(collision.gameObject.name);
             colliderListener.ExtraOnCollisionEnter(this.gameObject, collision);
         }
         void OnTriggerEnter(Collider other)
         {
-            Debug.Log(other.gameObject.name);
             colliderListener.ExtraOnTriggerEnter(this.gameObject, other);
         }
     }

@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Pandaria.Characters.Attributes;
+using Pandaria.Buildings;
 
 namespace Pandaria.Enemies
 {
@@ -36,7 +38,17 @@ namespace Pandaria.Enemies
             {
                 colliderBridge.Initialize(this);
             }
+            EventBus.Instance.NightStarted += (object sender, EventArgs e) => SetVisible(false);
+            EventBus.Instance.DayStarted += (object sender, EventArgs e) => SetVisible(true);
             
+        }
+
+        void SetVisible(bool shouldBeVisible)
+        {
+            foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
+            {
+                renderer.enabled = shouldBeVisible;
+            }
         }
 
         public void Update()
@@ -81,8 +93,8 @@ namespace Pandaria.Enemies
 
         void SearchWalkPoint()
         {
-            float randomZ = Random.Range(-walkPointRange, walkPointRange);
-            float randomX = Random.Range(-walkPointRange, walkPointRange);
+            float randomZ = UnityEngine.Random.Range(-walkPointRange, walkPointRange);
+            float randomX = UnityEngine.Random.Range(-walkPointRange, walkPointRange);
 
             walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
             
@@ -97,6 +109,7 @@ namespace Pandaria.Enemies
                 
             }
         }
+        
         void Patrol()
         {
             navMeshAgent.isStopped = false;
@@ -182,6 +195,24 @@ namespace Pandaria.Enemies
             if (characterAttributeController != null && isAttacking && notifier.name == "Index_Proximal_R")
             {
                 characterAttributeController.ApplyDamage(damage);
+            }
+        }
+
+        void OnTriggerEnter(Collider other)
+        {
+            Crystal crystal = other.GetComponent<Crystal>();
+            if (crystal != null)
+            {
+                SetVisible(true);
+            }
+        }
+
+        void OnTriggerExit(Collider other)
+        {
+            Crystal crystal = other.GetComponent<Crystal>();
+            if (crystal != null)
+            {
+                SetVisible(false);
             }
         }
 

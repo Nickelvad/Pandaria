@@ -25,6 +25,8 @@ namespace Pandaria
         public event EventHandler<int> CharacterHpChanged;
         public event EventHandler<EquipableItem> EquipmentChanged;
         public event EventHandler<IAttribute> AttributeChanged;
+        public event EventHandler DayStarted;
+        public event EventHandler NightStarted;
 
 
         public void CallGameObjectSpotted(object sender, GameObject gameObject)
@@ -106,5 +108,17 @@ namespace Pandaria
         {
             AttributeChanged?.Invoke(sender, attribute);
         }
+
+        public void CallDayStarted(object sender)
+        {
+            DayStarted?.Invoke(sender, null);
+        }
+
+        public void CallNightStarted(object sender)
+        {
+            NightStarted?.Invoke(sender, null);
+        }
+
+
     }
 }
