@@ -58,6 +58,7 @@ namespace Pandaria.Enemies
             if (!characterInAttackRange && characterInSightRange)
             {
                 Chase();
+                Rotate();
             }
 
             if (characterInAttackRange && characterInSightRange && !characterInSightAngle)
