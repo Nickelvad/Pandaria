@@ -9,7 +9,7 @@ namespace Pandaria.Inputs
     {
         public Joystick.Joystick joystick;
 
-        private float GetHorizontal()
+        public float GetHorizontal()
         {
             if (Input.GetKey(KeyCode.A))
             {
@@ -22,7 +22,7 @@ namespace Pandaria.Inputs
             return joystick.Horizontal;
         }
 
-        private float GetVertical()
+        public float GetVertical()
         {
             if (Input.GetKey(KeyCode.W))
             {

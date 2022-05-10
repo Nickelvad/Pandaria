@@ -7,7 +7,7 @@ namespace Pandaria.Cameras
     public class TurretCameraController : MonoBehaviour
     {
         public GameObject turret;
-        public float verticalAngle = 3f;
+        public float verticalAngle = 190f;
         public float distance = 3f;
 
         void Update()
@@ -17,9 +17,9 @@ namespace Pandaria.Cameras
                 return;
             }
 
-            transform.position = turret.transform.position - new Vector3(distance, 0, distance);
-            // transform.position += new Vector3(0, verticalAngle, 0);
-            // transform.RotateAround(transform.position, transform.right, verticalAngle);
+            var vector = Quaternion.AngleAxis(verticalAngle, turret.transform.right) * turret.transform.forward;
+            var result = turret.transform.position + vector * distance;
+            transform.position = Vector3.Slerp(transform.position, result, 5f);
             transform.LookAt(turret.transform);
         }
     }

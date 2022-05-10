@@ -13,6 +13,7 @@ namespace Pandaria.Cameras
 
         void Update()
         {
+            
             if (this.targetTransform == null)
             {
                 return;
@@ -22,7 +23,6 @@ namespace Pandaria.Cameras
             vector = Quaternion.AngleAxis(this.hortizontalAngle, Vector3.up) * vector;
 
             var result = this.targetTransform.position + vector * distance;
-
             this.transform.position = Vector3.Slerp(this.transform.position, result, slerpFactor);
             this.transform.LookAt(this.targetTransform);
         }
