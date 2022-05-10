@@ -6,8 +6,13 @@ namespace Pandaria.Buildings
 {
     public class Tower : MonoBehaviour
     {
-        public Transform entryPosition;
-        public Transform destinationPosition;
+        public GameObject turret;
+
+
+        public void Activate()
+        {
+
+        }
     }
 }
 
