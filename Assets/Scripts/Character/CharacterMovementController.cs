@@ -1,4 +1,5 @@
 using UnityEngine;
+using Pandaria.Inputs;
 using Pandaria.Characters.Attributes;
 
 namespace Pandaria.Characters
@@ -21,7 +22,6 @@ namespace Pandaria.Characters
         public AnimationClip movementAnimationClip;
         public AnimationClip idleAnimationClip;
 
-        private InputController inputController;
         private Rigidbody rigidbody_;
         private Vector3 moveDirection;
         public bool isGrounded = true;
@@ -34,7 +34,6 @@ namespace Pandaria.Characters
         void Start()
         {
             rigidbody_ = transform.GetComponent<Rigidbody>();
-            inputController = GetComponent<InputController>();
         }
 
 
@@ -67,7 +66,7 @@ namespace Pandaria.Characters
             }
 
             isGrounded = GetGrounded();
-            moveDirection = inputController.GetInputDirection();
+            moveDirection = InputController.Instance.GetInputDirection();
 
             if (moveDirection != Vector3.zero)
             {

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Pandaria.Characters
+namespace Pandaria.Inputs
 {
 
     public class InputController : Singleton<InputController>
