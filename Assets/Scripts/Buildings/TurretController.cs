@@ -21,8 +21,27 @@ namespace Pandaria.Buildings
         {
             Rotation();
             PrepareToFire();
+            RotateAmmunition();
             Fire();
         }
+
+        private void RotateAmmunition()
+        {
+            if (loadedAmmunition != null)
+            {
+                loadedAmmunition.transform.rotation = transform.rotation;
+            }
+            
+        }
+
+        private void PlaceAmmunition()
+        {
+            if (loadedAmmunition != null)
+            {
+                loadedAmmunition.transform.position = ammunitionSpawnPosition.transform.position;
+            }
+        }
+
 
         public void PrepareToFire()
         {
@@ -31,10 +50,9 @@ namespace Pandaria.Buildings
                 return;
             }
 
-            loadedAmmunition = Instantiate(ammunitionPrefab, ammunitionSpawnPosition.transform.position, Quaternion.identity, transform);
+            loadedAmmunition = Instantiate(ammunitionPrefab, ammunitionSpawnPosition.transform.position, Quaternion.identity);
             loadedAmmunitionRigidbody = loadedAmmunition.GetComponent<Rigidbody>();
             loadedAmmunitionRigidbody.isKinematic = true;
-            loadedAmmunition.transform.rotation = transform.rotation;
             preparedToFire = true;
         }
 
@@ -78,6 +96,7 @@ namespace Pandaria.Buildings
         void FixedUpdate()
         {
             transform.localEulerAngles = newRotation;
+            PlaceAmmunition();
         }
     }
 
