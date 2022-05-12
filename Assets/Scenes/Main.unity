@@ -309,7 +309,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 46483216}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: AmmunitionSpawnPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8535,7 +8535,7 @@ GameObject:
   - component: {fileID: 658606667}
   - component: {fileID: 658606666}
   - component: {fileID: 658606665}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27872,7 +27872,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2134862284}
   - component: {fileID: 2134862285}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: TurretContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27909,12 +27909,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   verticalRotationMin: -20
   verticalRotationMax: 25
-  ammunitionPrefab: {fileID: 4216014741728519275, guid: 950dac9522989164cadb937b0ded686b, type: 3}
-  ammunitionSpawnPosition: {fileID: 46483215}
+  ammoPrefab: {fileID: 4216014741728519275, guid: 950dac9522989164cadb937b0ded686b, type: 3}
+  ammoSpawnPosition: {fileID: 46483215}
   initialFiringPower: 10
   maxFiringPower: 40
   firingPowerIncreasePerSecond: 10
-  firingPowerAmmunitionOffset: 0.1
+  firingPowerAmmoOffset: 0.1
   firingPower: 10
 --- !u!4 &2140723937 stripped
 Transform:

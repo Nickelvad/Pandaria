@@ -1,18 +1,18 @@
 using UnityEngine;
 using Pandaria.Inputs;
 
-namespace Pandaria.Buildings
+namespace Pandaria.Buildings.Turrets
 {
     public class TurretController : MonoBehaviour
     {
         public float verticalRotationMin = 340f;
         public float verticalRotationMax = 45f;
-        public GameObject ammunitionPrefab;
-        public GameObject ammunitionSpawnPosition;
+        public GameObject ammoPrefab;
+        public GameObject ammoSpawnPosition;
         public float initialFiringPower = 10f;
         public float maxFiringPower = 40f;
         public float firingPowerIncreasePerSecond = 10f;
-        public float firingPowerAmmunitionOffset = 0.1f;
+        public float firingPowerAmmoOffset = 0.1f;
 
         private Vector3 rotationDirection;
         private Vector3 newRotation;
@@ -22,37 +22,37 @@ namespace Pandaria.Buildings
         private bool preparingToFire = false;
         private bool firing = false;
         public float firingPower = 10f;
-        private GameObject loadedAmmunition;
-        private Rigidbody loadedAmmunitionRigidbody;
+        private GameObject loadedAmmo;
+        private BaseTurretAmmo baseTurretAmmo;
         
         void Update()
         {
             CalculateRotation();
             PrepareToFire();
-            RotateAmmunition();
+            RotateAmmo();
             Fire();
         }
 
         void FixedUpdate()
         {
             Rotate();
-            MoveAmmunition();
+            MoveAmmo();
         }
 
-        private void RotateAmmunition()
+        private void RotateAmmo()
         {
-            if (loadedAmmunition != null)
+            if (loadedAmmo != null)
             {
-                loadedAmmunition.transform.rotation = transform.rotation;
+                baseTurretAmmo.SetRotation(transform.rotation);
             }
             
         }
 
-        private void MoveAmmunition()
+        private void MoveAmmo()
         {
             if (firing & firingPower < maxFiringPower)
             {
-                loadedAmmunition.transform.position -= loadedAmmunition.transform.forward * Time.deltaTime * firingPowerAmmunitionOffset;
+                baseTurretAmmo.SetPosition(firingPowerAmmoOffset);
             }
         }
 
@@ -69,9 +69,8 @@ namespace Pandaria.Buildings
 
         private void Prepare()
         {
-            loadedAmmunition = Instantiate(ammunitionPrefab, ammunitionSpawnPosition.transform.position, Quaternion.identity, this.transform);
-            loadedAmmunitionRigidbody = loadedAmmunition.GetComponent<Rigidbody>();
-            loadedAmmunitionRigidbody.isKinematic = true;
+            loadedAmmo = Instantiate(ammoPrefab, ammoSpawnPosition.transform.position, Quaternion.identity, this.transform);
+            baseTurretAmmo = loadedAmmo.GetComponent<BaseTurretAmmo>();
             preparedToFire = true;
             preparingToFire = false;
         }
@@ -114,10 +113,8 @@ namespace Pandaria.Buildings
     
             if (Input.GetButtonUp("Fire1") && firing)
             {
-                loadedAmmunitionRigidbody.isKinematic = false;
-                loadedAmmunitionRigidbody.AddForce(loadedAmmunition.transform.forward * firingPower, ForceMode.Impulse);
-                loadedAmmunition.transform.SetParent(null);
-                loadedAmmunition = null;
+                baseTurretAmmo.Fire(firingPower);
+                loadedAmmo = null;
                 preparedToFire = false;
                 firing = false;
                 firingPower = initialFiringPower;
@@ -136,12 +133,12 @@ namespace Pandaria.Buildings
 
         void OnDrawGizmosSelected()
         {
-            if (loadedAmmunition != null)
+            if (loadedAmmo != null)
             {
                 Gizmos.color = Color.blue;
                 Vector3 sight = transform.position + transform.forward * 5;
 
-                Gizmos.DrawLine(loadedAmmunition.transform.position, sight);
+                Gizmos.DrawLine(loadedAmmo.transform.position, sight);
             }
 
         }
