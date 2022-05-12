@@ -5971,7 +5971,7 @@ GameObject:
   - component: {fileID: 245766412}
   - component: {fileID: 245766411}
   m_Layer: 5
-  m_Name: UI
+  m_Name: CharacterUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27911,6 +27911,11 @@ MonoBehaviour:
   verticalRotationMax: 25
   ammunitionPrefab: {fileID: 4216014741728519275, guid: 950dac9522989164cadb937b0ded686b, type: 3}
   ammunitionSpawnPosition: {fileID: 46483215}
+  initialFiringPower: 10
+  maxFiringPower: 40
+  firingPowerIncreasePerSecond: 10
+  firingPowerAmmunitionOffset: 0.1
+  firingPower: 10
 --- !u!4 &2140723937 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0a859f2ae3fd98b4d8d2f0ac1982a618, type: 3}

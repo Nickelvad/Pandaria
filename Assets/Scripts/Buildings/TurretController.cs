@@ -9,20 +9,34 @@ namespace Pandaria.Buildings
         public float verticalRotationMax = 45f;
         public GameObject ammunitionPrefab;
         public GameObject ammunitionSpawnPosition;
+        public float initialFiringPower = 10f;
+        public float maxFiringPower = 40f;
+        public float firingPowerIncreasePerSecond = 10f;
+        public float firingPowerAmmunitionOffset = 0.1f;
+
         private Vector3 rotationDirection;
         private Vector3 newRotation;
         private float vertical = 0f;
         private float horizontal = 0f;
         private bool preparedToFire = false;
+        private bool preparingToFire = false;
+        private bool firing = false;
+        public float firingPower = 10f;
         private GameObject loadedAmmunition;
         private Rigidbody loadedAmmunitionRigidbody;
         
         void Update()
         {
-            Rotation();
+            CalculateRotation();
             PrepareToFire();
             RotateAmmunition();
             Fire();
+        }
+
+        void FixedUpdate()
+        {
+            Rotate();
+            MoveAmmunition();
         }
 
         private void RotateAmmunition()
@@ -34,29 +48,35 @@ namespace Pandaria.Buildings
             
         }
 
-        private void PlaceAmmunition()
+        private void MoveAmmunition()
         {
-            if (loadedAmmunition != null)
+            if (firing & firingPower < maxFiringPower)
             {
-                loadedAmmunition.transform.position = ammunitionSpawnPosition.transform.position;
+                loadedAmmunition.transform.position -= loadedAmmunition.transform.forward * Time.deltaTime * firingPowerAmmunitionOffset;
             }
         }
 
-
         public void PrepareToFire()
         {
-            if (preparedToFire)
+            if (preparedToFire || preparingToFire)
             {
                 return;
             }
 
-            loadedAmmunition = Instantiate(ammunitionPrefab, ammunitionSpawnPosition.transform.position, Quaternion.identity);
+            Invoke(nameof(Prepare), 2);
+            preparingToFire = true;
+        }
+
+        private void Prepare()
+        {
+            loadedAmmunition = Instantiate(ammunitionPrefab, ammunitionSpawnPosition.transform.position, Quaternion.identity, this.transform);
             loadedAmmunitionRigidbody = loadedAmmunition.GetComponent<Rigidbody>();
             loadedAmmunitionRigidbody.isKinematic = true;
             preparedToFire = true;
+            preparingToFire = false;
         }
 
-        private void Rotation()
+        private void CalculateRotation()
         {
             rotationDirection = new Vector3(InputController.Instance.GetVertical(), InputController.Instance.GetHorizontal(), 0f);
             
@@ -82,21 +102,48 @@ namespace Pandaria.Buildings
             newRotation = new Vector3(180f + vertical, horizontal, 180f);
         }
 
+        private void Rotate()
+        {
+            transform.localEulerAngles = newRotation;
+        }
+
         private void Fire()
         {
-            if (Input.GetButtonDown("Fire1"))
+            if (preparingToFire) { return; }
+            if (!preparedToFire) { return; }
+    
+            if (Input.GetButtonUp("Fire1") && firing)
             {
                 loadedAmmunitionRigidbody.isKinematic = false;
-                loadedAmmunitionRigidbody.AddForce(loadedAmmunition.transform.forward * 10f, ForceMode.Impulse);
+                loadedAmmunitionRigidbody.AddForce(loadedAmmunition.transform.forward * firingPower, ForceMode.Impulse);
+                loadedAmmunition.transform.SetParent(null);
                 loadedAmmunition = null;
                 preparedToFire = false;
+                firing = false;
+                firingPower = initialFiringPower;
+            }
+
+            if (Input.GetButtonDown("Fire1") && !firing)
+            {
+                firing = true;
+            }
+
+            if (firing && firingPower < maxFiringPower)
+            {
+                firingPower += firingPowerIncreasePerSecond * Time.deltaTime;
             }
         }
 
-        void FixedUpdate()
+        void OnDrawGizmosSelected()
         {
-            transform.localEulerAngles = newRotation;
-            PlaceAmmunition();
+            if (loadedAmmunition != null)
+            {
+                Gizmos.color = Color.blue;
+                Vector3 sight = transform.position + transform.forward * 5;
+
+                Gizmos.DrawLine(loadedAmmunition.transform.position, sight);
+            }
+
         }
     }
 
