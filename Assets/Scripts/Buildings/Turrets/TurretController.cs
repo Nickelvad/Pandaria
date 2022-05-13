@@ -7,6 +7,8 @@ namespace Pandaria.Buildings.Turrets
     {
         public float verticalRotationMin = 340f;
         public float verticalRotationMax = 45f;
+        public Transform verticalTransform;
+        public Transform horizontalTransform;
         public GameObject ammoPrefab;
         public GameObject ammoSpawnPosition;
         public float initialFiringPower = 10f;
@@ -43,7 +45,7 @@ namespace Pandaria.Buildings.Turrets
         {
             if (loadedAmmo != null)
             {
-                baseTurretAmmo.SetRotation(transform.rotation);
+                baseTurretAmmo.SetRotation(verticalTransform.rotation);
             }
             
         }
@@ -69,7 +71,7 @@ namespace Pandaria.Buildings.Turrets
 
         private void Prepare()
         {
-            loadedAmmo = Instantiate(ammoPrefab, ammoSpawnPosition.transform.position, Quaternion.identity, this.transform);
+            loadedAmmo = Instantiate(ammoPrefab, ammoSpawnPosition.transform.position, Quaternion.identity, ammoSpawnPosition.transform.parent);
             baseTurretAmmo = loadedAmmo.GetComponent<BaseTurretAmmo>();
             preparedToFire = true;
             preparingToFire = false;
@@ -103,7 +105,8 @@ namespace Pandaria.Buildings.Turrets
 
         private void Rotate()
         {
-            transform.localEulerAngles = newRotation;
+            horizontalTransform.localEulerAngles = new Vector3(180f, horizontal, 180f);
+            verticalTransform.localEulerAngles = new Vector3(180f + vertical, horizontal, 180f);
         }
 
         private void Fire()

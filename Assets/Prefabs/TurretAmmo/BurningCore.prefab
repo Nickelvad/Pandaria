@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4808017708461281189}
-  - component: {fileID: 8948405025009496572}
-  - component: {fileID: 8535685303984154398}
+  - component: {fileID: 2403627841130195155}
+  - component: {fileID: 1323359733746169371}
   m_Layer: 0
   m_Name: Smoke
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 4808017708551002862}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!199 &8948405025009496572
+--- !u!199 &2403627841130195155
 ParticleSystemRenderer:
   serializedVersion: 6
   m_ObjectHideFlags: 0
@@ -98,7 +98,7 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!198 &8535685303984154398
+--- !u!198 &1323359733746169371
 ParticleSystem:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4834,7 +4834,7 @@ Transform:
   m_GameObject: {fileID: 4808017708551002858}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -19.1, y: -2.8, z: 10.63}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children:
   - {fileID: 4808017708461281189}
   m_Father: {fileID: 0}
