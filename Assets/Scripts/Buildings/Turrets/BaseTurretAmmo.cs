@@ -6,8 +6,8 @@ public class BaseTurretAmmo : MonoBehaviour
 {
     public LayerMask layersToIgnore;
     public GameObject centerOfMass;
-    private Rigidbody _rigidbody;
-    private Collider _collider;
+    protected Rigidbody _rigidbody;
+    protected Collider _collider;
 
     void Awake()
     {
@@ -19,7 +19,7 @@ public class BaseTurretAmmo : MonoBehaviour
         
     }
 
-    void OnTriggerEnter(Collider other)
+    virtual protected void OnTriggerEnter(Collider other)
     {
         if (other.gameObject != null && (((1 << other.gameObject.layer) & layersToIgnore) != 0))
         {
@@ -32,7 +32,7 @@ public class BaseTurretAmmo : MonoBehaviour
         Invoke(nameof(DestroyAmmo), 3f);
     }
 
-    void DestroyAmmo()
+    protected void DestroyAmmo()
     {
         Destroy(this.gameObject);
     }
