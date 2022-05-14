@@ -288,7 +288,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 1, g: 1, b: 1, a: 0.15686275}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -4934,3 +4934,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 264
   centerOfMass: {fileID: 4808017708461281188}
+  explosionPrefab: {fileID: 1822236807939815019, guid: a8edcc0852718c544b0fe110466c42f3, type: 3}
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 128
