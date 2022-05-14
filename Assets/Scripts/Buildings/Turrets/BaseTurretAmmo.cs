@@ -6,6 +6,9 @@ public class BaseTurretAmmo : MonoBehaviour
 {
     public LayerMask layersToIgnore;
     public GameObject centerOfMass;
+    public float directDamage;
+    public float splashDamage;
+    public float splashRadius;
     protected Rigidbody _rigidbody;
     protected Collider _collider;
 

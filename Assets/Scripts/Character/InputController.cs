@@ -8,6 +8,8 @@ namespace Pandaria.Inputs
     public class InputController : Singleton<InputController>
     {
         public Joystick.Joystick joystick;
+        private Vector3 lastMousePositionX = new Vector3(255f, 255f, 255f);
+        private Vector3 lastMousePositionY = new Vector3(255f, 255f, 255f);
 
         public float GetHorizontal()
         {
@@ -19,6 +21,15 @@ namespace Pandaria.Inputs
             {
                 return 1;
             }
+            if (Input.mousePosition != Vector3.zero)
+            {
+                var mouseMove = (Input.mousePosition - lastMousePositionX).normalized;
+                Debug.Log(mouseMove);
+                lastMousePositionX = Input.mousePosition;
+                return mouseMove.x;
+            }
+            
+            
             return joystick.Horizontal;
         }
 
@@ -31,6 +42,13 @@ namespace Pandaria.Inputs
             if (Input.GetKey(KeyCode.S))
             {
                 return -1;
+            }
+
+            if (Input.mousePosition != Vector3.zero)
+            {
+                var mouseMove = (Input.mousePosition - lastMousePositionY).normalized;
+                lastMousePositionY = Input.mousePosition;
+                return mouseMove.y;
             }
             return joystick.Vertical;
         }

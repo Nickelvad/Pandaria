@@ -4934,7 +4934,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 264
   centerOfMass: {fileID: 4808017708461281188}
+  directDamage: 50
+  splashDamage: 50
+  splashRadius: 10
   explosionPrefab: {fileID: 1822236807939815019, guid: a8edcc0852718c544b0fe110466c42f3, type: 3}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 128
+  whatIsEnemy:
+    serializedVersion: 2
+    m_Bits: 512
